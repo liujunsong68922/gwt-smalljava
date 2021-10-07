@@ -46,29 +46,48 @@ public class LogicNotEqualOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("int")) {
 					IntegerValue intoper = new IntegerValue(leftvar.getVarsvalue());
-					intoper.doNotEquals(rightvar.getVarsvalue());
-					return intoper;
+					boolean b1 =intoper.doNotEquals(rightvar.getVarsvalue());
+					VarValue v1 = new VarValue();
+					v1.setVarname("");
+					v1.setVartype("boolean");
+					v1.setVarsvalue(""+b1);
+					return v1;
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
 					// �ѵڶ����ڵ���ַ�������ȥ
 					System.out.println("Long���������:" + rightvar.getVarsvalue());
-					longoper.doNotEquals(rightvar.getVarsvalue());
-					return longoper;
+					boolean b2 =longoper.doNotEquals(rightvar.getVarsvalue());
+					VarValue v1 = new VarValue();
+					v1.setVarname("");
+					v1.setVartype("boolean");
+					v1.setVarsvalue(""+b2);
+					return v1;
+
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
 					System.out.println("Float���������:" + rightvar.getVarsvalue());
-					floatoper.doNotEquals(rightvar.getVarsvalue());
-					return floatoper;
+					boolean b3=floatoper.doNotEquals(rightvar.getVarsvalue());
+					VarValue v1 = new VarValue();
+					v1.setVarname("");
+					v1.setVartype("boolean");
+					v1.setVarsvalue(""+b3);
+					return v1;
+
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
 					;
 					// �ѵڶ����ڵ���ַ�������ȥ
 					System.out.println("Double���������:" + rightvar.getVarsvalue());
-					doubleoper.doNotEquals(rightvar.getVarsvalue());
-					return doubleoper;
+					boolean b4 =doubleoper.doNotEquals(rightvar.getVarsvalue());
+					VarValue v1 = new VarValue();
+					v1.setVarname("");
+					v1.setVartype("boolean");
+					v1.setVarsvalue(""+b4);
+					return v1;
+
 				}
 				System.out.println("��ERROR��GE���������˲�֧�ֵ��������ͣ�" + leftvar.getVartype());
 				return null;

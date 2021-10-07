@@ -124,6 +124,7 @@ public class IntegerValue extends VarValue {
 	public boolean doLitter(String s1) {
 		int oper2;
 		oper2 = (int)Double.parseDouble(s1);
+		
 		return (Integer.parseInt(this.varsvalue) < oper2);		
 		
 	}

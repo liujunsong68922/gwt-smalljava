@@ -1,8 +1,12 @@
 package com.liu.gwt.client;
 
 import com.liu.gwt.gwt_smalljava.level4_block.blockanalyse.BlockAnalyse;
+import com.liu.gwt.gwt_smalljava.level4_block.blockeval.BlockEvaluator;
 import com.liu.gwt.gwt_smalljava.level4_block.blockvo.BasicBlock;
+import com.liu.gwt.gwt_smalljava.space.impl.ClassTableImpl;
 import com.liu.gwt.shared.FieldVerifier;
+//import com.liu.webui.client.smalljava.level4_block.blockeval.BlockEvaluator;
+//import com.liu.webui.client.smalljava.space.impl.ClassTableImpl;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,15 +44,23 @@ public class SmallJavaApp implements EntryPoint {
    */
   private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
-  private final String stext1="int i=0;";
-  private final String stext2="int i=100;";
+  private final String stext1="int i=0;\r\n"
+                       	+"if ( i< 10 ){ \r\n"
+  						+"  i = 100; \r\n"
+  						+"}";
+  private final String stext2="int i; \r\n"
+		  				+"for(i=0; i < 10 ; i=i+1){ \r\n"
+		  				+"   i = i + 100; \r\n"
+		  				+"}";
   private final String stext3="int i= 100 + 200;";
   private final String stext4="int i = 100 + 200 * 2;";
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
-    final Button sendButton = new Button("Analyse(语法分析)");
+    final Button analyseButton = new Button("Analyse(语法分析)");
+    final Button evalButton = new Button("Eval(代码执行)");
+    
     final Button text1Button = new Button("text1");
     final Button text2Button = new Button("text2");
     final Button text3Button = new Button("text3");
@@ -56,12 +68,15 @@ public class SmallJavaApp implements EntryPoint {
     final TextArea textarea = new TextArea();
     textarea.setWidth("600px");
     textarea.setHeight("150px");
+    final TextArea asttext = new TextArea();
+    asttext.setWidth("600px");
+    asttext.setHeight("150px");
     final TextBox nameField = new TextBox();
     nameField.setText("GWT User");
     final Label errorLabel = new Label();
 
     // We can add style names to widgets
-    sendButton.addStyleName("sendButton");
+    analyseButton.addStyleName("sendButton");
     text1Button.addClickListener(new ClickListener() {
 		@Override
 		public void onClick(Widget sender) {
@@ -93,22 +108,49 @@ public class SmallJavaApp implements EntryPoint {
     RootPanel.get("text2buttonContainer").add(text2Button);
     RootPanel.get("text3buttonContainer").add(text3Button);
     RootPanel.get("text4buttonContainer").add(text4Button);
-    RootPanel.get("sendButtonContainer").add(sendButton);
     RootPanel.get("errorLabelContainer").add(errorLabel);
     RootPanel.get("textareaContainer").add(textarea);
+    RootPanel.get("asttextContainer").add(asttext);
 
+    RootPanel.get("sendButtonContainer").add(analyseButton);
+    RootPanel.get("evalButtonContainer").add(evalButton);
+    
     // Focus the cursor on the name field when the app loads
     nameField.setFocus(true);
     nameField.selectAll();
 
-    sendButton.addClickListener(new ClickListener() {
+    analyseButton.addClickListener(new ClickListener() {
 		@Override
 		public void onClick(Widget sender) {
-			// TODO Auto-generated method stub
 			String stext = textarea.getText();
 			BasicBlock bb = testAnalyseByBlock(stext);
+//			Window.alert(bb.getVarString());
+			asttext.setText(bb.getShowString(0));
+		}});
+    
+    evalButton.addClickListener(new ClickListener() {
+
+		@Override
+		public void onClick(Widget sender) {
+			String stext = textarea.getText();
+			BasicBlock bb = testAnalyseByBlock(stext);
+			asttext.setText(bb.getShowString(0));
+			
+			BlockEvaluator node = new BlockEvaluator();
+			//classtable 目前在GWT里面是一个无效接口，后续考虑去掉
+			//因为GWT不支持Java类的反射机制，因此必须手工进行调用
+			ClassTableImpl classtable = new ClassTableImpl();
+			try {
+				boolean b2 = node.execute(bb,classtable);
+				Window.alert("计算结果:"+b2);
+			} catch (Exception e) {
+				Window.alert("计算错误:"+e.getMessage());
+			}
+			
+			Window.alert("代码执行完毕!");
 			Window.alert(bb.getVarString());
 		}});
+    
   }
   
 	private static BasicBlock testAnalyseByBlock(String stext) {

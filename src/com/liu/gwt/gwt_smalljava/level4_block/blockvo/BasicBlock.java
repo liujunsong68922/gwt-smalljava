@@ -113,6 +113,50 @@ public class BasicBlock implements IVarTable {
 			child.show(ilevel + 1);
 		}
 	}
+	
+	public String  getShowString(int ilevel) {
+		String str_tree ="";
+		if (this.children == null) {
+			return str_tree;
+		}
+		String blockname = this.getClass().getSimpleName();
+		if (this.blocktype != null && this.blocktype.length() > 0) {
+			blockname = this.blocktype;
+		}
+		String strleft = "";
+		for (int i = 0; i < ilevel; i++) {
+			strleft += "    ";
+		}
+
+		if (this.children.size() == 0) {
+			if (this instanceof MethodBlock) {
+				MethodBlock mb = (MethodBlock) this;
+				System.out.println(
+						strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+				consoleLog(strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+				str_tree += "\r\n";
+				str_tree += (strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+			} else {
+				System.out.println(strleft + "---->" + blockname + ":" + this.blockContent);
+				consoleLog(strleft + "---->" + blockname + ":" + this.blockContent);
+				str_tree += "\r\n";
+				str_tree += (strleft + "---->" + blockname + ":" + this.blockContent);
+			}
+			return str_tree;
+		} else {
+			System.out.println(strleft + "---->" + blockname);
+			consoleLog(strleft + "---->" + blockname);
+			str_tree +="\r\n";
+			str_tree += strleft + "---->" + blockname;
+		}
+
+		for (BasicBlock child : this.children) {
+			//child.show(ilevel + 1);
+			String s1 = child.getShowString(ilevel+1);
+			str_tree += s1;
+		}
+		return str_tree;
+	}	
 
 	public void showvar(int ilevel) {
 		if (this.children == null) {

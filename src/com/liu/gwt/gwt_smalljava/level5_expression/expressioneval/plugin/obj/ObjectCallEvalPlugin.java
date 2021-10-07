@@ -28,11 +28,6 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 		
 		Object targetobj = UuidObjectManager.getObject(varvalue.getVarsvalue());
 		if(targetobj != null) {
-			//if (targetobj instanceof WebUIApp) {
-			//	Window.alert("This is WebUIApp");
-			//	callWebUIAppFunction(targetobj,methodname);
-			//	return new VarValue();
-			//}else {
 				JavaVMImpl jvm = new JavaVMImpl();
 				Object retobj = jvm.objectCall(targetobj, methodname);
 				
@@ -88,8 +83,6 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 					return varvalue6;
 				}
 
-				//闄や簡鍩虹鏁版嵁绫诲瀷浠ュ鐨勭被鍨嬶紝浣跨敤Object鏉ヨ繘琛屽瓨鍌�
-				//鎵�浠ュ厛鐢熸垚涓�涓猽uid鏉ヤ綔涓哄敮涓�鐨勬爣璇嗙
 				String uuid = uuid();
 				
 				UuidObjectManager objmanage = new UuidObjectManager();
@@ -101,9 +94,6 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 				varvalue1.setVarsvalue(uuid);
 				
 				return varvalue1;
-			//}
-			
-			
 			
 		}else {
 			eval(objname,methodname);

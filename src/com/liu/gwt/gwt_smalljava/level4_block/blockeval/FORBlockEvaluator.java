@@ -98,6 +98,7 @@ public class FORBlockEvaluator {
 			}
 			
 			System.out.println("for������������" +b5.getVarsvalue());
+			b2 = b5;
 		}
 		
 		return true;
@@ -107,126 +108,8 @@ public class FORBlockEvaluator {
 		System.out.println(sinfo);
 	}
 	
-	public boolean execute(ElementWrapper block,IClassTable classtable) throws Exception {
-		log("---------->ִ��for�ڵ�");
-//		//��������ڵ��Ƿ�Ϸ�
-//		if(this.getBeginNode(block.getElement()) == null
-//				|| this.getForconditionNode(block.getElement())==null
-//				|| this.getLoopNode(block.getElement()) == null
-//				|| this.getForloopBlock(block.getElement())==null ) {
-//			return false;
-//		}
-//		
-//		//step1:ִ�п�ʼ�ڵ�
-//		ASTTreeNode node = new ASTTreeNode(getBeginNode(block.getElement()).getBlockContent(),0);
-//		node.analyseTree();
-//		node.show();
-//
-//		boolean b1 = node.eval(block,classtable);
-//		if(! b1) {
-//			log("��ERROR��IF�ڵ�ִ��begin�ڵ����."+getBeginNode(block.getElement()).getBlockContent());
-//			return false;
-//		}
-//		//this.beginNode.execute();
-//		//step2:ִ���ж�����
-//		//System.out.println("while �������ʽ:" + this.forcondition);
-//		ASTTreeNode node2 = new ASTTreeNode(getForconditionNode(block.getElement()).getBlockContent(), 0);
-//		node2.analyseTree();
-//		node2.show();
-//		//VarTableNode varmap = this.getVarmaps();
-//		//node.eval(varmap);
-//		boolean b2 = node2.eval(block,classtable);
-//		if(! b2) {
-//			log("��ERROR��IF�ڵ�ִ��condition�ڵ����."+getForconditionNode(block.getElement()).getBlockContent());
-//			return false;
-//		}
-//		System.out.println("for������������" + node2.getOperdataresult().isElementBooleanValue());
-//		
-//		while (node2.getOperdataresult().isElementBooleanValue()) {
-//			//step3.ִ�д����
-//			BlockEvaluator be = new BlockEvaluator();
-//			boolean b3 = be.execute(getForloopBlock(block.getElement()),classtable);
-//			if(! b3) {
-//				log("��ERROR��IF�ڵ�ִ��loop�����."+getForloopBlock(block.getElement()).getBlockContent());
-//				return false;
-//				
-//			}
-//			
-//			ASTTreeNode node3 = new ASTTreeNode(getLoopNode(block.getElement()).getBlockContent(), 0);
-//			node3.analyseTree();
-//			node3.show();
-//			boolean b4 = node3.eval(block,classtable);
-//			if(! b4) {
-//				log("��ERROR��ִ��loop�ڵ����"+getLoopNode(block.getElement()).getBlockContent());
-//				return false;
-//			}
-//					
-//			//���¼����ж�����
-//			node2 = new ASTTreeNode(getForconditionNode(block.getElement()).getBlockContent(), 0);
-//			node2.analyseTree();
-//			node2.show();
-//			boolean b5= node2.eval(block,classtable);
-//			if(! b5) {
-//				log("��ERROR��IF�ڵ�ִ��condition�ڵ����."+getForconditionNode(block.getElement()).getBlockContent());
-//				return false;				
-//			}
-//			
-//			System.out.println("for������������" +node2.getOperdataresult().isElementBooleanValue());
-//		}
-//		
-//		return true;
-		return false;
-	}
-	
-//	@SuppressWarnings("unused")
-//	private ElementWrapper getBeginNode(Element root) {
-//		String xpath = "BeginNode";
-//		Element ele = (Element) root.selectSingleNode(xpath);
-//		if(ele!=null) {
-//			ElementWrapper ew = new ElementWrapper();
-//			ew.setElement(ele);
-//			return ew;
-//		}else {
-//			return null;
-//		}
-//	}
-//	@SuppressWarnings("unused")
-//	private ElementWrapper getForconditionNode(Element root) {
-//		String xpath = SmallJavaBlockConst.ForConditionNode;
-//		Element ele = (Element) root.selectSingleNode(xpath);
-//		if(ele!=null) {
-//			ElementWrapper ew = new ElementWrapper();
-//			ew.setElement(ele);
-//			return ew;
-//		}else {
-//			return null;
-//		}
-//	}
-	
-//	@SuppressWarnings("unused")
-//	private ElementWrapper getForloopBlock(Element root) {
-//		String xpath = SmallJavaBlockConst.ForLoopBlock;
-//		Element ele = (Element) root.selectSingleNode(xpath);
-//		if(ele!=null) {
-//			ElementWrapper ew = new ElementWrapper();
-//			ew.setElement(ele);
-//			return ew;
-//		}else {
-//			return null;
-//		}
-//	}
-	
-//	@SuppressWarnings("unused")
-//	private ElementWrapper getLoopNode(Element root) {
-//		String xpath = SmallJavaBlockConst.ForLoopNode;
-//		Element ele = (Element) root.selectSingleNode(xpath);
-//		if(ele!=null) {
-//			ElementWrapper ew = new ElementWrapper();
-//			ew.setElement(ele);
-//			return ew;
-//		}else {
-//			return null;
-//		}
-//	}
-
+	public native void consoleLog(String message) /*-{
+	//alert(message);
+	console.log( "[ForBlockEvaluaotr]:" + message );
+	}-*/;
 }

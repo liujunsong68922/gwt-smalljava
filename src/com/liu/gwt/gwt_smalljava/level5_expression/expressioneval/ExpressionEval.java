@@ -2,6 +2,7 @@ package com.liu.gwt.gwt_smalljava.level5_expression.expressioneval;
 
 import java.util.HashMap;
 
+import com.google.gwt.user.client.Window;
 import com.liu.gwt.gwt_smalljava.common.VarValue;
 import com.liu.gwt.gwt_smalljava.level5_expression.expressioneval.plugin.atom.AtomEvalPlugin;
 import com.liu.gwt.gwt_smalljava.level5_expression.expressioneval.plugin.constvalue.ConstEvalPlugin;
@@ -63,7 +64,8 @@ public class ExpressionEval implements IExpressionEval {
 		if (root instanceof AbstractConstDataElement) {
 			consoleLog("This is AbstractConstDataElement");
 			ConstEvalPlugin consteval = new ConstEvalPlugin();
-			return consteval.eval(root, vartable, classtable);
+			VarValue v1 = consteval.eval(root, vartable, classtable);
+			return v1;
 		}
 
 		// step2.如果是root是一个变量节点，则返回变量结算结果
@@ -106,16 +108,21 @@ public class ExpressionEval implements IExpressionEval {
 
 		// Part3. 二元运算符号的部分
 		if (root instanceof DualOperDataOperElement) {
-			consoleLog("This is DualOperDataOperElement");
+			consoleLog("This is DualOperDataOperElement:");
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
+			consoleLog("opercode:"+oper.getOpercode());
 			// 不同的运算符，调用不同的处理器
 			IExpressionEval eeval = this.getEvalPluginByOpercode(oper.getOpercode());
 			if(eeval == null) {
 				System.out.println("Cannot find oper expressioneval:"+oper.getOpercode());
 				consoleLog("Cannot find oper expressioneval:"+oper.getOpercode());
 				return null;
+			}else {
+				VarValue v2 = eeval.eval(root, vartable, classtable);
+				consoleLog("dualoper result:"+v2.toString());
+				return v2;
 			}
-			return eeval.eval(root, vartable, classtable);
+			//return eeval.eval(root, vartable, classtable);
 		}
 
 		// Part3.二元运算符的支持部分，这一部分也全部依据表达式重写
@@ -157,13 +164,13 @@ public class ExpressionEval implements IExpressionEval {
 
 	private static void initEvalMap() {
 		if (evalmap.size() == 0) {
-			//�ȼ������������
+			//Math operator
 			evalmap.put("+", new MathAddOperEvalPlugin());
 			evalmap.put("-", new MathDeAddOperEvalPlugin());
 			evalmap.put("*", new MathMultiOperEvalPlugin());
 			evalmap.put("/", new MathDevideOperEvalPlugin());
 
-			//�ټ����߼������
+			//Logic Operator
 			evalmap.put("&&", new LogicAndOperEvalPlugin());
 			evalmap.put("||", new LogicOrOperEvalPlugin());
 			evalmap.put(">", new LogicGreaterOperEvalPlugin());

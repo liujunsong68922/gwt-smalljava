@@ -46,29 +46,43 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("int")) {
 					IntegerValue intoper = new IntegerValue(leftvar.getVarsvalue());
-					intoper.doLE(rightvar.getVarsvalue());
-					return intoper;
+					boolean b1 = intoper.doLE(rightvar.getVarsvalue());
+					VarValue v1 = new VarValue();
+					v1.setVarname("");
+					v1.setVartype("boolean");
+					v1.setVarsvalue(""+b1);
+					return v1;
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
-					// �ѵڶ����ڵ���ַ�������ȥ
 					System.out.println("Long���������:" + rightvar.getVarsvalue());
-					longoper.doLE(rightvar.getVarsvalue());
-					return longoper;
+					boolean b2 = longoper.doLE(rightvar.getVarsvalue());
+					VarValue v2 = new VarValue();
+					v2.setVarname("");
+					v2.setVartype("boolean");
+					v2.setVarsvalue(""+b2);
+					return v2;
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
 					System.out.println("Float���������:" + rightvar.getVarsvalue());
-					floatoper.doLE(rightvar.getVarsvalue());
-					return floatoper;
+					boolean b3 = floatoper.doLE(rightvar.getVarsvalue());
+					VarValue v3 = new VarValue();
+					v3.setVarname("");
+					v3.setVartype("boolean");
+					v3.setVarsvalue(""+b3);
+					return v3;
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
 					;
-					// �ѵڶ����ڵ���ַ�������ȥ
 					System.out.println("Double���������:" + rightvar.getVarsvalue());
-					doubleoper.doLE(rightvar.getVarsvalue());
-					return doubleoper;
+					boolean b4 = doubleoper.doLE(rightvar.getVarsvalue());
+					VarValue v4 = new VarValue();
+					v4.setVarname("");
+					v4.setVartype("boolean");
+					v4.setVarsvalue(""+b4);
+					return v4;
 				}
 				System.out.println("��ERROR��LE���������˲�֧�ֵ��������ͣ�" + leftvar.getVartype());
 				return null;
