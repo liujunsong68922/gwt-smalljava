@@ -1,0 +1,2 @@
+serviceClass: com.liu.gwt.client.GreetingService
+path: BCE743BF8057930850CDF495E0140A1A.gwt.rpc

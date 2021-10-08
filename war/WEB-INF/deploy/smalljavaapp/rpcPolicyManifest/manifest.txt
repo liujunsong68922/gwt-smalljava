@@ -1,0 +1,3 @@
+# Module smalljavaapp
+# RPC service class, partial path of RPC policy file
+com.liu.gwt.client.GreetingService, BCE743BF8057930850CDF495E0140A1A.gwt.rpc
