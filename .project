@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <projectDescription>
-   <name>SmallJavaApp</name>
-   <comment>SmallJavaApp project</comment>
+   <name>SmalljavaApp</name>
+   <comment>SmalljavaApp project</comment>
    <projects/>
    <buildSpec>
     <buildCommand>
