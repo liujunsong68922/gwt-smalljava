@@ -1,16 +1,14 @@
 package com.smalljava.core.l6_vm.objectcall.plugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.smalljava.core.common.VarValue;
 import com.smalljava.core.l6_vm.objectcall.IObjectCall;
 
 public class HashMapObjectCallPlugin implements IObjectCall {
 
-	@Override
-	public Object objcall(String classname, Object target, String methodname, Object args) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	private int size(Object target) {
 		if (target instanceof HashMap) {
@@ -20,6 +18,12 @@ public class HashMapObjectCallPlugin implements IObjectCall {
 			System.out.println("Error: target object is not HashMap.");
 			return 0;
 		}
+	}
+
+	@Override
+	public Object objcall(String classname, Object target, String methodname, ArrayList<VarValue> args) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

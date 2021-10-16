@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.smalljava.core.l6_vm.newinstance.plugin.HashMapNewInstance;
 
 public class NewInstancePluginManager implements INewInstance {
+	
 	private static HashMap<String,INewInstance> instancemap = new HashMap<String,INewInstance>();
 	
 	public NewInstancePluginManager() {

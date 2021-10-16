@@ -44,6 +44,7 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 			// Ŀǰֻ����java������Ѿ�֧�ֵ���Ĵ���
 			ObjectCallOperElement objcall = (ObjectCallOperElement) root;
 			String objname = objcall.getObjname();
+			String methodname = objcall.getMethodname();
 			logger.info("objname:" + objname);
 
 			// ���ȷ��ʱ�������ȡ����VarValue
@@ -52,7 +53,7 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 				logger.error("[ERROR] find var in vartable is null:" + objname);
 				return null;
 			}
-			String classname = objvar.getVarsvalue();
+			String classname = objvar.getVartype();
 			String objuuid = objvar.getVarsvalue();
 			Object targetobj = UuidObjectManager.getObject(objuuid);
 			if (targetobj == null) {
@@ -71,7 +72,7 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 				// ������ֵд��callarg
 				arglist.add(vvalue1);
 			}
-			return this.objectcall(classname,targetobj, objname, arglist);
+			return this.objectcall(classname,targetobj, methodname, arglist);
 
 			// logger.error("[ERROR] object call error happened.");
 			// return null;
@@ -89,12 +90,12 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 //		}
 		// Step2. call objects by method
 
-		Object args = null;
+		//Object args = null;
 		Object retobj;
 		try {
 			//retobj = mm.invoke(targobj, args);
 			ObjectCallManager manager = new ObjectCallManager();
-			retobj = manager.objcall(classname, targobj, methodname, args);
+			retobj = manager.objcall(classname, targobj, methodname, arglist);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
