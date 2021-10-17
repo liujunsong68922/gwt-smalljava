@@ -10,11 +10,7 @@ import com.smalljava.core.l5_expression.vo.atom.AtomElement;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * MEMO:评估执行（）表达式
- * @author liujunsong
- *
- */
+
 public class AtomEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(AtomEvalPlugin.class);
 
@@ -26,15 +22,13 @@ public class AtomEvalPlugin implements IExpressionEval {
 		if(root instanceof AtomElement) {
 			AtomElement atom = (AtomElement) root;
 			if(atom.getChildren().size()==0) {
-				logger.error("【ERROR】调用atom执行器，却没有child");
+				logger.error("[error] atom has no children.");
+				return null;
 			}
-			//只管第一个child,其他的不管
 			RootAST child = root.getChildren().get(0);
-			//递归调用来进行计算
 			ExpressionEval eval = new ExpressionEval();
 			return eval.eval(child, vartable, classtable);
 		}
 		return null;
 	}
-
 }

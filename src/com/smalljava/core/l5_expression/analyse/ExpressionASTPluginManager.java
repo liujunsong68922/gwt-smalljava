@@ -16,12 +16,7 @@ import com.smalljava.core.l5_expression.analyse.plugin.var.VarSetOperPlugin;
 import com.smalljava.core.l5_expression.analyse.plugin.var.VariableDefineOperPlugin;
 import com.smalljava.core.l5_expression.analyse.plugin.var.VariableOperPlugin;
 
-/**
- * AST解析和Block解析一样，选择使用插件模式来进行
- * MEMO：每个不同的插件按照自己的逻辑进行独立的计算拆解
- * @author liujunsong
- *
- */
+
 public class ExpressionASTPluginManager {
 	private static ArrayList<IAstPlugin> pluginmap=new ArrayList<IAstPlugin>();
 	
@@ -31,8 +26,6 @@ public class ExpressionASTPluginManager {
 	
 	private static void initMap() {
 		if(pluginmap.size()==0) {
-			//将各个处理插件加进来，按照优先级来添加
-			//优先级高的放在前面，优先级低的放在后面
 
 			pluginmap.add(new MathAddDeaddOperPlugin());
 			pluginmap.add(new MathMultiDevideOperPlugin());

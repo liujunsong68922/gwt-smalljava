@@ -3,11 +3,6 @@ package com.smalljava.core.l4_block.blockvo.childblock;
 import com.smalljava.core.l4_block.SmallJavaBlockConst;
 import com.smalljava.core.l4_block.blockvo.BasicBlock;
 
-/**
- * Do...while ´úÂë¶Î¶¨Òå
- * @author liujunsong
- *
- */
 public class DOWHILEBlock extends BasicBlock {
 	private BasicBlock donode;
 	private BasicBlock whilenode;

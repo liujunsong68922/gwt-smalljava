@@ -3,11 +3,6 @@ package com.smalljava.core.l4_block.blockanalyse.plugin;
 import com.smalljava.core.l4_block.blockvo.BasicBlock;
 import com.smalljava.core.l4_block.blockvo.childblock.ReturnBlock;
 
-/**
- * MEMO：针对Return关键词 做特殊处理
- * @author liujunsong
- *
- */
 public class ReturnPlugin extends DefaultAbstractAnalysePlugin {
 
 	@Override

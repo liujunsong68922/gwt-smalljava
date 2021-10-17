@@ -6,30 +6,21 @@ import com.smalljava.core.l4_block.SmallJavaBlockConst;
 import com.smalljava.core.l4_block.blockvo.BasicBlock;
 import com.smalljava.core.l4_block.blockvo.childblock.MethodBlock;
 
-/**
- * 
- * @author liujunsong
- *
- */
+
 public class BlockAnalyse {
 	private Logger logger = LoggerFactory.getLogger(BlockAnalyse.class);
 	
 	private BlockAnalysePluginManager pmanager = new BlockAnalysePluginManager();
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 	 */
 	public BlockAnalyse() {
 
 	}
 
-	/**
-	 * °Ñ×Ö·û´®rootblock.computestring·Ö½â³ÉAbastractBlock,ÀïÃæÓÃChildrenÀ´¹¹Ôì³ÉÊ÷×´½á¹¹
-	 * 
-	 * @return ture ·Ö½â³É¹¦ false ·Ö½âÊ§°Ü
-	 */
 	public boolean analyse(BasicBlock rootblock) {
-		// step1:¼ì²éÊäÈë²ÎÊı
+		// step1
 		if (rootblock == null) {
 			logger.error("Argument Error,rootblock is null.");
 			return false;
@@ -38,71 +29,71 @@ public class BlockAnalyse {
 			logger.error("Argument Error,rootblock.computestring is null.");
 			return false;
 		}
-		// Èç¹ûÊÇMethodBlock£¬Í£Ö¹·ÖÎö
+		//
 		if (rootblock instanceof MethodBlock) {
 			logger.error("Method block stop analyse.");
 			return true;
 		}
-		//ÅĞ¶ÏrootblockµÄÀàĞÍ
+		//
 		if(rootblock.getBlocktype()!=null
 				&& rootblock.getBlocktype().equals(SmallJavaBlockConst.ImportBlock)) {
-			logger.error("import Óï¾ä²»ÔÙ¼ÌĞø´¦Àí¡£");
+			logger.error("import ");
 			return true;
 		}
 		if(rootblock.getBlocktype()!=null
 				&& rootblock.getBlocktype().equals(SmallJavaBlockConst.SingleLineMemo)) {
-			logger.error("singlelinememo Óï¾ä²»ÔÙ¼ÌĞø´¦Àí¡£");
+			logger.error("singlelinememo ");
 			return true;
 		}
 		if(rootblock.getBlocktype()!=null
 				&& rootblock.getBlocktype().equals(SmallJavaBlockConst.MultiLineMemo)) {
-			logger.error("multilinememo Óï¾ä²»ÔÙ¼ÌĞø´¦Àí¡£");
+			logger.error("multilinememo ");
 			return true;
 		}
 		
-		// ³õÊ¼»¯¼ÆËã²ÎÊı
+		// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		rootblock.computestring = rootblock.getBlockContent();
 		logger.info("---->analyse begin." + rootblock.computestring);
-		// step2.Ğ´Èërootblock,½ö×ö±¸·İÓÃ
+		// step2.
 
 		rootblock.computestring = this._trimReturnAndSpace(rootblock.computestring);
 		rootblock.setBlockContent(rootblock.computestring);
 
-		// step3.¿ªÊ¼´¦Àí·ÇÑ­»·²¿·Ö
+		// step3.
 		if (rootblock.computestring.equals("") && rootblock.getChildren().size()==0) {
 			rootblock.setBlocktype(SmallJavaBlockConst.EmptyBlock);
 			return true;
 		}
 
-		// Ñ­»·´¦Àí×Ó½ÚµãÊ±£¬ĞèÒªÌø¹ıIfBlock,Ö±½Ó´¦ÀíÆäÏÂ¼¶
+		// 
 		if (!rootblock.getBlocktype().equals(SmallJavaBlockConst.Ifblock)) {
-			// Step4.¿ªÊ¼½øĞĞÑ­»·ÅĞ¶Ï´¦Àí,¸ù¾İÊ××ÖÄ¸À´½øĞĞÅĞ¶Ï×ßÏÂÒ»²½µÄ·ÖÖ§£¬
-			// Ã¿´ÎÖ´ĞĞÍê±Ïºó¶Ñrootblock.computestring½øĞĞÇĞ·Ö
+			// Step4.
+			// 
 			while (rootblock.computestring.length() > 0) {
-				// Step4.0£¬½øĞĞtrim´¦Àí
+				// Step4.0
 				rootblock.computestring = this._trimReturnAndSpace(rootblock.computestring);
 
-				// Ñ­»·µ÷ÓÃ²å¼ş½øĞĞ´¦Àí£¬Èç¹û²å¼ş·µ»Øfalse,ËµÃ÷²å¼ş³ö´íÁË£¬Í£Ö¹Ö´ĞĞ
+				//
 				String s1 = rootblock.computestring;
 				if (!pmanager.process(rootblock)) {
-					logger.info("¡¾ERROR¡¿½âÎö²å¼şµ÷ÓÃÊ§°Ü:" + rootblock.computestring);
-					// µ÷ÓÃÊ§°Ü£¬·µ»Øfalse
+					logger.info("[ERROR]:" + rootblock.computestring);
+					//
 					return false;
 				}
 
 				String s2 = rootblock.computestring;
 				if (s1.length() == s2.length()) {
-					// ×Ö·û´®Ã»ÓĞµÃµ½ÓĞĞ§´¦ÀíµÄÇé¿öÏÂ£¬·µ»Øfalse
-					// ¸÷¸ö²å¼şÖ®ÖĞÂß¼­ÉÏ±ØĞëÓĞÆ¥ÅäµÄ²Å¶Ô
-					logger.info("¡¾ERROR¡¿ËùÓĞµÄ²å¼şÖ´ĞĞÒÔºó£¬×Ö·û´®Ã»ÓĞµÃµ½ÈÎºÎ´¦Àí." + rootblock.computestring);
+					// 
+					// 
+					logger.info("[ERROR]." + rootblock.computestring);
 					return false;
 				}
 			}
 		}
 
-		// Step5.±¾¼¶½ÚµãÇĞ·ÖÍê±Ï£¬¿ªÊ¼´¦ÀíÏÂ¼¶½Úµã£¬²¢ÅĞ¶ÏÆä·µ»ØÖµ
+		// Step5.ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ğ·ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Úµã£¬ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ä·µï¿½ï¿½Öµ
 		for (BasicBlock child : rootblock.getChildren()) {
-			//´Ë´¦ĞèÒª¸ù¾İchildµÄÀàĞÍÀ´ÅĞ¶ÏÊÇ·ñĞèÒª¼ÌĞø
+			//
 			if(child.getBlocktype().equals(SmallJavaBlockConst.SingleLineMemo)) {
 				continue;
 			}
@@ -115,27 +106,22 @@ public class BlockAnalyse {
 			
 			
 			if (!analyse(child)) {
-				logger.info("¡¾ERROR¡¿µİ¹éµ÷ÓÃ×Ó½Úµã·ÖÎöÊ±·¢Éú´íÎó.");
+				logger.info("error analyse child.");
 				return false;
 			}
 		}
-		// ³ÌĞò³É¹¦ÔËĞĞÍê±Ï
+		//
 		return true;
 	}
 
-	/**
-	 * ½«×Ö·û´®¿ªÊ¼ºÍ½áÊøÎ»ÖÃµÄ\r\n ,\r,¿Õ¸ñ¶¼¹ıÂËµô
-	 * 
-	 * @param strinput
-	 * @return
-	 */
+
 	private String _trimReturnAndSpace(String strinput) {
 		// String sout = "";
-		// ÏÈ²éÕÒµÚÒ»¸ö²»ÊÇ\r\n \r ¿Õ¸ñµÄÎ»ÖÃ
+		// 
 		int ipos = -1;
 		for (int i = 0; i < strinput.length(); i++) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
+				//
 				continue;
 			} else {
 				ipos = i;
@@ -144,15 +130,15 @@ public class BlockAnalyse {
 		}
 
 		if (ipos == -1) {
-			// Ã»ÓĞÕÒµ½ÓĞĞ§×Ö·û
+			// 
 			return "";
 		}
 
-		// ¿ªÊ¼´ÓºóÍùÇ°²éÕÒµÚÒ»¸öÓĞĞ§×Ö·û
+		// 
 		int ipos2 = -1;
 		for (int i = strinput.length() - 1; i >= 0; i--) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
+				// 
 				continue;
 			} else {
 				ipos2 = i;
@@ -160,11 +146,11 @@ public class BlockAnalyse {
 			}
 		}
 
-		// ÓÉÓÚiposÓĞĞ§£¬ËùÒÔipos2Ò»¶¨Ò²ÊÇÓĞĞ§µÄ
+		// 
 		if (ipos2 >= ipos) {
 			return strinput.substring(ipos, ipos2 + 1);
 		} else {
-			logger.error("³ÌĞòÖ´ĞĞ³öÏÖ´íÎó£¬ĞèÒª²éÕÒÎÊÌâËùÔÚ.ipos,ipos2=" + ipos + "," + ipos2);
+			logger.error("[ERROR].ipos,ipos2=" + ipos + "," + ipos2);
 			return "";
 		}
 	}

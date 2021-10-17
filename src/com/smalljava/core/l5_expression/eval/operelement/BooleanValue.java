@@ -2,11 +2,6 @@ package com.smalljava.core.l5_expression.eval.operelement;
 
 import com.smalljava.core.common.VarValue;
 
-/**
- * 针对boolean类型的操作封装符号
- * @author liujunsong
- *
- */
 public class BooleanValue extends VarValue {
 	
 
@@ -21,11 +16,6 @@ public class BooleanValue extends VarValue {
 		this.varsvalue = b1?"true":"false";
 	}
 	
-	/**
-	 * 逻辑与
-	 * @param s1
-	 * @return
-	 */
 	public BooleanValue doAnd(String s1) {
 		s1 = s1.trim();
 		boolean b1 = s1.equalsIgnoreCase("true");
@@ -33,11 +23,6 @@ public class BooleanValue extends VarValue {
 		return this;
 	}
 	
-	/**
-	 * 逻辑或
-	 * @param s1
-	 * @return
-	 */
 	public BooleanValue doOr(String s1) {
 		s1 = s1.trim();
 		boolean b1 = s1.equalsIgnoreCase("true");
@@ -45,10 +30,6 @@ public class BooleanValue extends VarValue {
 		return this;
 	}
 	
-	/**
-	 * 逻辑非
-	 * @return
-	 */
 	public BooleanValue doNot() {
 		if(Boolean.parseBoolean(this.varsvalue)) {
 			this.varsvalue = "false";
@@ -58,11 +39,6 @@ public class BooleanValue extends VarValue {
 		return this;
 	}
 	
-	/**
-	 * 相等判断
-	 * @param s1
-	 * @return
-	 */
 	public boolean doequals(String s1) {
 		if (this.varsvalue.equalsIgnoreCase(s1) ) {
 			return true;

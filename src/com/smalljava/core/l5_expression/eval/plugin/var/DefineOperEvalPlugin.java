@@ -11,7 +11,6 @@ public class DefineOperEvalPlugin implements IExpressionEval {
 
 	@Override
 	public VarValue eval(RootAST root, IVarTable vartable, IClassTable classtable) {
-		//null÷µºÏ≤È
 		if(root == null || vartable == null || classtable == null) {
 			return null;
 		}

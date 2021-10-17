@@ -37,6 +37,6 @@ public class TestBlockAnalyse {
 		System.out.println("");
 		System.out.println("");
 		closedblock.show(0);
-		System.out.println("·ÖÎö½á¹û£º"+isok);		
+		System.out.println("execute result:"+isok);		
 	}
 }

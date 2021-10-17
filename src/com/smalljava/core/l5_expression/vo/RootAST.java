@@ -16,25 +16,14 @@ import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.core.l5_expression.vo.var.VarDataElement;
 import com.smalljava.core.l5_expression.vo.var.VarDefineOperElement;
 
-/**
- * RootAST����һ����Ҫ��һ�����зֽ⴦����м�״̬��������ڵ��¼������ӽڵ�
- * 
- * @author liujunsong
- *
- */
 public class RootAST extends AbstractAST {
 	private Logger logger = LoggerFactory.getLogger(RootAST.class);
 
 	public String strexpression;
-	/**
-	 * MEMOϵͳ���ɵĴ���ڵ�Ψһ��ʶ��uuid
-	 */
+
 	private String uuid;
 
-	// ���캯��
 	public RootAST() {
-		// ����Ψһ��uuid
-		//this.uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		this.uuid = UUIDFunction.uuid();
 	}
 

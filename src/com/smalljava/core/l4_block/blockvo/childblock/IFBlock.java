@@ -3,11 +3,7 @@ package com.smalljava.core.l4_block.blockvo.childblock;
 import com.smalljava.core.l4_block.SmallJavaBlockConst;
 import com.smalljava.core.l4_block.blockvo.BasicBlock;
 
-/**
- * MEMO:IF代码块，可能包含ELSE部分
- * @author liujunsong
- *
- */
+
 public class IFBlock extends BasicBlock {
 	
 	private BasicBlock ifConditionblock;

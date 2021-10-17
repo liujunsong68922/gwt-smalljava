@@ -14,16 +14,10 @@ import com.smalljava.core.l5_expression.eval.ExpressionEval;
 import com.smalljava.core.l5_expression.eval.IExpressionEval;
 import com.smalljava.core.l5_expression.vo.RootAST;
 import com.smalljava.core.l5_expression.vo.obj.ObjectCallOperElement;
-import com.smalljava.core.l6_vm.objectcall.ObjectCallManager;
+import com.smalljava.core.l6_vm.objectcall.ObjectCallPluginManager;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * Java���󷽷����õ�ִ�в��
- * 
- * @author liujunsong
- *
- */
 public class ObjectCallEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(ObjectCallEvalPlugin.class);
 
@@ -39,9 +33,6 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 			logger.error("root is not ObjectCallOperElement");
 			return null;
 		} else {
-			// ��ʱ�������Զ���class������
-			// �Զ���class�Ĳ�����Ҫ�����µĴ�����д���
-			// Ŀǰֻ����java������Ѿ�֧�ֵ���Ĵ���
 			ObjectCallOperElement objcall = (ObjectCallOperElement) root;
 			String objname = objcall.getObjname();
 			String methodname = objcall.getMethodname();
@@ -94,7 +85,7 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 		Object retobj;
 		try {
 			//retobj = mm.invoke(targobj, args);
-			ObjectCallManager manager = new ObjectCallManager();
+			ObjectCallPluginManager manager = new ObjectCallPluginManager();
 			retobj = manager.objcall(classname, targobj, methodname, arglist);
 		
 		} catch (Exception e) {

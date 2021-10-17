@@ -3,27 +3,15 @@ package com.smalljava.core.l4_block.blockanalyse.plugin;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 
-/**
- * Õâ¸ö³éÏóÀàÓÃÀ´·â×°¹«¹²·½·¨£¬¹©¸÷¸öPlugin¶ÔÏóÀ´Ê¹ÓÃ
- * @author liujunsong
- *
- */
+
 public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 	private Logger logger = LoggerFactory.getLogger(DefaultAbstractAnalysePlugin.class);
 	
-	/**
-	 * ½«×Ö·û´®¿ªÊ¼ºÍ½áÊøÎ»ÖÃµÄ\r\n ,\r,¿Õ¸ñ¶¼¹ıÂËµô
-	 * 
-	 * @param strinput
-	 * @return
-	 */
 	public  String _trimReturnAndSpace(String strinput) {
 		// String sout = "";
-		// ÏÈ²éÕÒµÚÒ»¸ö²»ÊÇ\r\n \r ¿Õ¸ñµÄÎ»ÖÃ
 		int ipos = -1;
 		for (int i = 0; i < strinput.length(); i++) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
 				continue;
 			} else {
 				ipos = i;
@@ -32,15 +20,12 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 		}
 
 		if (ipos == -1) {
-			// Ã»ÓĞÕÒµ½ÓĞĞ§×Ö·û
 			return "";
 		}
 
-		// ¿ªÊ¼´ÓºóÍùÇ°²éÕÒµÚÒ»¸öÓĞĞ§×Ö·û
 		int ipos2 = -1;
 		for (int i = strinput.length() - 1; i >= 0; i--) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
 				continue;
 			} else {
 				ipos2 = i;
@@ -48,16 +33,14 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 			}
 		}
 
-		// ÓÉÓÚiposÓĞĞ§£¬ËùÒÔipos2Ò»¶¨Ò²ÊÇÓĞĞ§µÄ
 		if (ipos2 >= ipos) {
 			return strinput.substring(ipos, ipos2 + 1);
 		} else {
-			logger.info("³ÌĞòÖ´ĞĞ³öÏÖ´íÎó£¬ĞèÒª²éÕÒÎÊÌâËùÔÚ.ipos,ipos2=" + ipos + "," + ipos2);
+			logger.info("[error].ipos,ipos2=" + ipos + "," + ipos2);
 			return "";
 		}
 	}
 
-	// ´Ó×Ö·û´®ÀïÃæÕÒµ½µÚÒ»ĞĞ½áÊøµã,Í¨¹ı²éÕÒ\rÀ´ÊµÏÖ
 	public int _getFirstLineEndPos(String s1) {
 		int ipos = 0;
 		for (ipos = 0; ipos < s1.length(); ipos++) {
@@ -65,21 +48,11 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 				return ipos;
 			}
 		}
-		// Èç¹ûÑ­»·Íê±ÏÒ²ÕÒ²»µ½½áÊøµã£¬ËµÃ÷Ã»ÓĞ»Ø³µ·û
 		return -1;
 	}
 	
-	// -1´ú±íÃ»ÓĞÕÒµ½
-	// ²ÎÊı´íÎóÊ±£¬ÔÚ¿ØÖÆÌ¨´òÓ¡³ö´íÎóĞÅÏ¢³öÀ´£¬ÔİÊ±²»Å×³öÒì³£
-	// ´úÂë¿é·ÖÎöÊ±Ìá¹©µÄ×Ö·û´®²éÕÒËã·¨
-	// ¹æÔòÈçÏÂ£º
-	// 1. µ¥ÒıºÅÄÚÌø¹ı
-	// 2.Ë«ÒıºÅÄÚÌø¹ı
-	// 3.£¨£©ÄÚÌø¹ı
-	// 4 {}ÄÚÌø¹ı
-	// 5 todo: Ìø¹ı×¢ÊÍµÄ×Ö·û´®
 	public int _findfirstStringForBlock(String s1, String s2) {
-		// NULLÖµ¼ì²é
+		// NULLÖµï¿½ï¿½ï¿½
 		if (s1 == null) {
 			logger.info("ERROR: StringFindUtil.findfirstStringForBlock,s1 is null");
 			return -1;
@@ -90,7 +63,7 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 			return -1;
 		}
 
-		// empty string ¼ì²é
+		// empty string ï¿½ï¿½ï¿½
 		if (s1.equals("")) {
 			logger.info("ERROR: StringFindUtil.findfirstStringForBlock,s1 is empty");
 			return -1;
@@ -101,43 +74,32 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 			return -1;
 		}
 
-		// ¶¨ÒåË«ÒıºÅºÍµ¥ÒıºÅµÄ¼ÆÊıÆ÷
 		int doublequotecount = 0;
 		int singlequotecount = 0;
 
-		// ¶¨Òå×óÀ¨ºÅ£¬ÓÒÀ¨ºÅµÄ¼ÆÊıÆ÷
-		// ÔÚÀ¨ºÅÄÚµÄÔËËã·û¡¾×óÓÒÀ¨ºÅ³ıÍâ¡¿²»²ÎÓë²éÕÒ
 		int leftParenthesescount = 0;
 		int rightParenthesescount = 0;
 
-		// ¶¨Òå×ó´óÀ¨ºÅ£¬ÓÒ´óÀ¨ºÅµÄ¼ÆÊıÆ÷
 		int leftBracketcount = 0;
 		int rightBracketcount = 0;
 
-		// ¶¨Òå¿ªÊ¼²éÕÒÎ»ÖÃ
 		int ibeginpos = 0;
-		// ¶¨Òå½áÊø²éÕÒÎ»ÖÃ
 		int iendpos = s1.length() - s2.length();
 
 		int ipos;
 		for (ipos = ibeginpos; ipos <= iendpos; ipos++) {
-			// Èç¹ûµ±Ç°Î»ÖÃÊÇ×ªÒå·û£¬Ìø¹ıÏÂÒ»×Ö·û
 			if (s1.substring(ipos, ipos + 1).equals("\\")) {
 				ipos++;
-				// Ìø¹ıµ±Ç°×Ö·û£¬¼ÌĞøÑ­»·£¬ÔÚÑ­»·ÖÕÖ¹Ìõ¼ş½«Ìø¹ıÏÂÒ»×Ö·û
 				continue;
 			}
 
-			// ÅĞ¶Ïµ±Ç°Î»ÖÃÊÇ·ñÊÇµ¥ÒıºÅ»òÕßË«ÒıºÅ£¬Èç¹ûÊÇ£¬Ôò¼ÆÊıÆ÷+1
 			if (s1.substring(ipos, ipos + 1).equals("'")) {
 				singlequotecount++;
 			} else if (s1.substring(ipos, ipos + 1).equals("\"")) {
 				doublequotecount++;
 			}
 
-			// Èç¹ûµ¥ÒıºÅ£¬Ë«ÒıºÅ¾ùÒÑ¾­±ÕºÏ£¬Ôò½øĞĞ×Ö·û´®¼ì²éÅĞ¶Ï
 			if (singlequotecount % 2 == 0 && doublequotecount % 2 == 0) {
-				// ÔÚÒıºÅ°üº¬Ö®Íâ£¬¶Ô×óÓÒÀ¨ºÅ½øĞĞ¼ÆÊı
 				if (s1.substring(ipos, ipos + 1).equals("(")) {
 					leftParenthesescount++;
 				}
@@ -151,18 +113,14 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 					rightBracketcount++;
 				}
 
-				// Èç¹ûµ±Ç°´¦ÀíÄ£Ê½ÔÚÀ¨ºÅÄÚ£¬ÄÇÃ´¾Í²»´¦ÀíºÍ±È½Ï
 				if (leftParenthesescount != rightParenthesescount) {
-					// µÚÒ»¸ö×óÀ¨ºÅÊÇ¿ÉÒÔ·µ»ØµÄ
 					if (leftParenthesescount == 1 && rightParenthesescount == 0 && s2.equals("(")) {
 						return ipos;
 					}
 					continue;
 				}
 
-				// Èç¹ûµ±Ç°´¦ÀíÄ£Ê½ÔÚ´óÀ¨ºÅÄÚ£¬ÄÇÃ´¾Í²»´¦ÀíºÍ±È½Ï
 				if (leftBracketcount != rightBracketcount) {
-					// µÚÒ»¸ö×ó´óÀ¨ºÅÊÇ¿ÉÒÔ·µ»ØµÄ
 					if (rightBracketcount == 0 && leftBracketcount == 1 && s2.equals("{")) {
 						return ipos;
 					}
@@ -170,56 +128,36 @@ public abstract class DefaultAbstractAnalysePlugin implements IAnalysePlugin {
 				}
 
 				if (s1.substring(ipos, ipos + s2.length()).equals(s2)) {
-					// ÕÒµ½ÁËÕâ¸ö×Ö·û´®,·µ»Ø´ËÎ»ÖÃ
-					// TODO£º´Ë´¦ĞèÒª×ö¶îÍâµÄÅĞ¶Ï£¬È·¶¨µ±Ç°²éÕÒµ½µÄÎ»ÖÃÊÇÒ»¸ö¶ÀÁ¢µÄÎ»ÖÃ½Úµã£¬¶ø²»ÊÇÒ»¸ö±äÁ¿µÄÒ»²¿·Ö
-					// ÀıÈçÒª²éÕÒ and ,ÄÇÃ´ÒªÅÅ³ıland,hand,and1 Ö®Àà
-					// Òò´Ë¿ÉÄÜ»¹ÊÇĞèÒª¶ÔÔ­Ê¼×Ö·û´®ÏÈ½øĞĞÒ»´Î·Ö´Ê²Ù×÷£¬ÒÔÈ·±£ÕÒµ½µÄÎ»ÖÃÊÇÒ»¸öÓĞĞ§Î»ÖÃ
-					// Õâ²¿·Ö´úÂë´ıÏÂÒ»²½²¹³ä¡£
-
-					// add by liujunsong 2021/03/28
-					// ÅĞ¶Ïµ±Ç°Î»ÖÃÖ®Ç°ÊÇ²»ÊÇ×Ö·û»òÕßÊı×Ö
-					// Èç¹ûÊÇ×Ö·ûºÍÊı×Ö£¬Ôò²»ËãÊı£¬²»¿É·µ»Ø
-					// ²»¼ÆËã{;
 					if (ipos > 0 && !s2.equals(";") && !s2.equals("{") && !s2.equals(")") && !s2.equals("}")) {
-						// È¡Ò»¸ö×Ö·û
 						char leftchar = s1.charAt(ipos - 1);
 						if (leftchar >= '0' && leftchar <= '9') {
-							// Õâ¸öÊÇÊıÖµ£¬²»ËãÊı
 							continue;
 						}
 						if (leftchar >= 'a' && leftchar <= 'z') {
-							// Õâ¸öÊÇĞ¡Ğ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 						if (leftchar >= 'A' && leftchar <= 'Z') {
-							// Õâ¸öÊÇ´óĞ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 					}
 
-					// ÅĞ¶ÏºóĞø×ÖÄ¸ÊÇ·ñÊÇÊı×ÖºÍ×ÖÄ¸£¬Ôò²»ËãÊı
-					// ²»¼ÆËã;{
 					if (ipos < s1.length() - s2.length() - 1 && !s2.equals(";") && !s2.equals("{") && !s2.equals("}")) {
-						// È¡Ò»¸ö×Ö·û
 						char rightChar = s1.charAt(ipos + s2.length());
 						logger.info("rightChar is:" + rightChar);
 						if (rightChar >= '0' && rightChar <= '9') {
-							// Õâ¸öÊÇÊıÖµ£¬²»ËãÊı
 							continue;
 						}
 						if (rightChar >= 'a' && rightChar <= 'z') {
-							// Õâ¸öÊÇĞ¡Ğ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 						if (rightChar >= 'A' && rightChar <= 'Z') {
-							// Õâ¸öÊÇ´óĞ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 					}
 					return ipos;
 				}
 			}
-			// Ã»ÓĞÕÒµ½×Ö·û´®£¬Ñ­»·µÈ´ı
+			// Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½È´ï¿½
 			// goto loop condition.
 		}
 

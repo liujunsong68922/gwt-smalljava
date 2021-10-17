@@ -14,12 +14,6 @@ import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * MEMO Ö´ÐÐ³ý·¨ÔËËã
- * 
- * @author liujunsong
- *
- */
 public class MathDevideOperEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(MathDevideOperEvalPlugin.class);
 	
@@ -31,21 +25,21 @@ public class MathDevideOperEvalPlugin implements IExpressionEval {
 
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
-			// ³ý·¨¼ÆËã
+			
 			if (oper.getOpercode().equals("/")) {
 				RootAST leftelement = oper.getChildren().get(0);
 				RootAST rightelement = oper.getChildren().get(1);
-				// Éú³ÉÒ»¸öÐÂµÄÆÀ¹ÀÆ÷
+				
 				ExpressionEval eeval = new ExpressionEval();
 				VarValue leftvar = eeval.eval(leftelement, vartable, classtable);
 				VarValue rightvar = eeval.eval(rightelement, vartable, classtable);
 				if (leftvar == null || rightvar == null) {
-					logger.error("³ý·¨¼ÆËãÊ§°Ü£¬²ÎÊýÎªnull");
+					logger.error("leftvar or rightvar is null");
 					return null;
 				}
 
 				if (leftvar.getVartype() == null) {
-					logger.error("³ÌÐòÂß¼­´íÎó£¬×ó²Ù×÷¶ÔÏóÀàÐÍÎªnull");
+					logger.error("leftvar vartype is null");
 					return null;
 				}
 				if (leftvar.getVartype().equals("int")) {
@@ -55,26 +49,26 @@ public class MathDevideOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
-					// °ÑµÚ¶þ¸ö½ÚµãµÄ×Ö·û´®´«½øÈ¥
-					logger.error("LongÓÒÃæ²Ù×÷Êý:" + rightvar.getVarsvalue());
+					
+					logger.error("Long value :" + rightvar.getVarsvalue());
 					longoper.doDevide(rightvar.getVarsvalue());
 					return longoper;
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
-					logger.error("FloatÓÒÃæ²Ù×÷Êý:" + rightvar.getVarsvalue());
+					logger.error("Float value :" + rightvar.getVarsvalue());
 					floatoper.doDevide(rightvar.getVarsvalue());
 					return floatoper;
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
 					;
-					// °ÑµÚ¶þ¸ö½ÚµãµÄ×Ö·û´®´«½øÈ¥
-					logger.error("DoubleÓÒÃæ²Ù×÷Êý:" + rightvar.getVarsvalue());
+					// ï¿½ÑµÚ¶ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥
+					logger.error("Double value :" + rightvar.getVarsvalue());
 					doubleoper.doDevide(rightvar.getVarsvalue());
 					return doubleoper;
 				}
-				logger.error("¡¾ERROR¡¿³ý·¨²Ù×÷Óöµ½ÁË²»Ö§³ÖµÄÊý¾ÝÀàÐÍ£º" + leftvar.getVartype());
+				logger.error("[error]unsupported vartype:" + leftvar.getVartype());
 				return null;
 
 			}

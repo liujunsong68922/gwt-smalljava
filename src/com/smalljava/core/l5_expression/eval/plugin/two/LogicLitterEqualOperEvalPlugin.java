@@ -14,12 +14,6 @@ import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * MEMO ÷¥––º”∑®‘ÀÀ„
- * 
- * @author liujunsong
- *
- */
 public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(LogicLitterEqualOperEvalPlugin.class);
 
@@ -31,21 +25,19 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
-			// º”∑®º∆À„
 			if (oper.getOpercode().equals("<=")) {
 				RootAST leftelement = oper.getChildren().get(0);
 				RootAST rightelement = oper.getChildren().get(1);
-				// …˙≥…“ª∏ˆ–¬µƒ∆¿π¿∆˜
 				ExpressionEval eeval = new ExpressionEval();
 				VarValue leftvar = eeval.eval(leftelement, vartable, classtable);
 				VarValue rightvar = eeval.eval(rightelement, vartable, classtable);
 				if (leftvar == null || rightvar == null) {
-					logger.error("º”∑®º∆À„ ß∞‹£¨≤Œ ˝Œ™null");
+					logger.error(" leftvar or rightvar is null");
 					return null;
 				}
 
 				if (leftvar.getVartype() == null) {
-					logger.error("≥Ã–Ú¬ﬂº≠¥ÌŒÛ£¨◊Û≤Ÿ◊˜∂‘œÛ¿‡–ÕŒ™null");
+					logger.error(" leftvar vartype is null");
 					return null;
 				}
 				if (leftvar.getVartype().equals("int")) {
@@ -60,8 +52,8 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
-					// ∞—µ⁄∂˛∏ˆΩ⁄µ„µƒ◊÷∑˚¥Æ¥´Ω¯»•
-					logger.error("Long”“√Ê≤Ÿ◊˜ ˝:" + rightvar.getVarsvalue());
+					// ÔøΩ—µ⁄∂ÔøΩÔøΩÔøΩÔøΩ⁄µÔøΩÔøΩÔøΩ÷∑ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ»•
+					logger.error("Long value :" + rightvar.getVarsvalue());
 					boolean b2 = longoper.doLE(rightvar.getVarsvalue());
 					VarValue varvalue2 = new VarValue();
 					varvalue2.setVarname("");
@@ -72,7 +64,7 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
-					logger.error("Float”“√Ê≤Ÿ◊˜ ˝:" + rightvar.getVarsvalue());
+					logger.error("Float value :" + rightvar.getVarsvalue());
 					boolean b3 = floatoper.doLE(rightvar.getVarsvalue());
 					VarValue varvalue3 = new VarValue();
 					varvalue3.setVarname("");
@@ -83,9 +75,7 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
-					;
-					// ∞—µ⁄∂˛∏ˆΩ⁄µ„µƒ◊÷∑˚¥Æ¥´Ω¯»•
-					logger.error("Double”“√Ê≤Ÿ◊˜ ˝:" + rightvar.getVarsvalue());
+					logger.error("Double value :" + rightvar.getVarsvalue());
 					boolean b4 = doubleoper.doLE(rightvar.getVarsvalue());
 					VarValue varvalue4 = new VarValue();
 					varvalue4.setVarname("");
@@ -93,7 +83,7 @@ public class LogicLitterEqualOperEvalPlugin implements IExpressionEval {
 					varvalue4.setVarsvalue("" + b4);
 					return varvalue4;
 				}
-				logger.error("°æERROR°øLE≤Ÿ◊˜”ˆµΩ¡À≤ª÷ß≥÷µƒ ˝æ›¿‡–Õ£∫" + leftvar.getVartype());
+				logger.error("[error]unsupported vartype: " + leftvar.getVartype());
 				return null;
 
 			}

@@ -2,11 +2,7 @@ package com.smalljava.core.l5_expression.vo.constvalue;
 
 import com.smalljava.core.l5_expression.vo.AbstractLeafElement;
 
-/**
- * 这是一个常量
- * @author liujunsong
- *
- */
+
 public abstract class AbstractConstDataElement extends AbstractLeafElement {
 	private String datatype;
 	private String datavalue;

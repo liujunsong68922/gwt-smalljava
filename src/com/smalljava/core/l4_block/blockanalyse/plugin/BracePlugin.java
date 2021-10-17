@@ -7,7 +7,7 @@ public class BracePlugin extends DefaultAbstractAnalysePlugin implements IAnalys
 
 	@Override
 	public boolean analyse(BasicBlock rootblock) {
-		// Step4.7 以【 {】开头
+		// Step4.7 
 		if (rootblock.computestring.startsWith("{")) {
 			return this._analyse_brace(rootblock);
 		} else {
@@ -15,23 +15,15 @@ public class BracePlugin extends DefaultAbstractAnalysePlugin implements IAnalys
 		}
 	}
 
-	/**
-	 * MEMO：分析处理以【{】开头的代码块
-	 * 
-	 * @param rootblock
-	 * @return
-	 */
 	private boolean _analyse_brace(BasicBlock rootblock) {
 		log("enter _analyse_brace");
 
 		int ipos2 = this._findfirstStringForBlock(rootblock.computestring, "}");
 		if (ipos2 == -1) {
-			// 有左面的{，但没有右面的}
-			// 这是括号不能匹配的错误
-			log("分析失败，找不到匹配的}:" + rootblock.computestring);
+			log("[ERROR]" + rootblock.computestring);
 			return false;
 		} else {
-			// 生成一个新的子节点，把{}去掉
+			//
 			String sinfo = rootblock.computestring.substring(1, ipos2);
 			BasicBlock child1 = new BasicBlock(SmallJavaBlockConst.SubBlock,sinfo,rootblock);
 			rootblock.getChildren().add(child1);

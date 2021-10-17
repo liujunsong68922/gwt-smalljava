@@ -3,21 +3,13 @@ package com.smalljava.core.common;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
-/**
- * ×Ö·û´®ÄÚ²éÕÒÌØ¶¨×Ö·û´®µÄº¯Êı·½·¨ ÒòÎªĞèÒª¿¼ÂÇµ½Ë«ÒıºÅµÄ´æÔÚ£¬ĞèÒª¹ıÂËµôË«ÒıºÅ£¬µ¥ÒıºÅÖ®ÄÚµÄÌØÊâ×Ö·û
- * 
- * @author liujunsong
- *
- */
+
 public class StringFindUtil {
 	private Logger logger = LoggerFactory.getLogger(StringFindUtil.class);
-	// -1´ú±íÃ»ÓĞÕÒµ½
-	// ²ÎÊı´íÎóÊ±£¬ÔÚ¿ØÖÆÌ¨´òÓ¡³ö´íÎóĞÅÏ¢³öÀ´£¬ÔİÊ±²»Å×³öÒì³£
+	// -1 means not found
 	public int findfirstStringForAST(String s1, String s2) {
-		// NULLÖµ¼ì²é
+		// NULL check
 		if (s1 == null) {
 			logger.error("ERROR: StringFindUtil.findfirstString,s1 is null");
 			return -1;
@@ -28,7 +20,7 @@ public class StringFindUtil {
 			return -1;
 		}
 
-		// empty string ¼ì²é
+		// empty string check
 		if (s1.equals("")) {
 			logger.error("ERROR: StringFindUtil.findfirstString,s1 is empty");
 			return -1;            
@@ -39,39 +31,38 @@ public class StringFindUtil {
 			return -1;
 		}
 
-		// ¶¨ÒåË«ÒıºÅºÍµ¥ÒıºÅµÄ¼ÆÊıÆ÷
+		// " '
 		int doublequotecount = 0;
 		int singlequotecount = 0;
 		
-		// ¶¨Òå×óÀ¨ºÅ£¬ÓÒÀ¨ºÅµÄ¼ÆÊıÆ÷
-		// ÔÚÀ¨ºÅÄÚµÄÔËËã·û¡¾×óÓÒÀ¨ºÅ³ıÍâ¡¿²»²ÎÓë²éÕÒ
+		// { }
 		int leftParenthesescount =0;
 		int rightParenthesescount = 0;
 
-		// ¶¨Òå¿ªÊ¼²éÕÒÎ»ÖÃ
+		// 
 		int ibeginpos = 0;
-		// ¶¨Òå½áÊø²éÕÒÎ»ÖÃ
+		// 
 		int iendpos = s1.length() - s2.length() ;
 
 		int ipos;
 		for (ipos = ibeginpos; ipos <= iendpos; ipos++) {
-			// Èç¹ûµ±Ç°Î»ÖÃÊÇ×ªÒå·û£¬Ìø¹ıÏÂÒ»×Ö·û
+			//
 			if (s1.substring(ipos, ipos+1).equals("\\")) {
 				ipos++;
-				// Ìø¹ıµ±Ç°×Ö·û£¬¼ÌĞøÑ­»·£¬ÔÚÑ­»·ÖÕÖ¹Ìõ¼ş½«Ìø¹ıÏÂÒ»×Ö·û
+				// 
 				continue;
 			}
 
-			// ÅĞ¶Ïµ±Ç°Î»ÖÃÊÇ·ñÊÇµ¥ÒıºÅ»òÕßË«ÒıºÅ£¬Èç¹ûÊÇ£¬Ôò¼ÆÊıÆ÷+1
+			// 
 			if (s1.substring(ipos, ipos+1).equals("'")) {
 				singlequotecount++;
 			} else if (s1.substring(ipos, ipos+1).equals("\"")) {
 				doublequotecount++;
 			}
 
-			// Èç¹ûµ¥ÒıºÅ£¬Ë«ÒıºÅ¾ùÒÑ¾­±ÕºÏ£¬Ôò½øĞĞ×Ö·û´®¼ì²éÅĞ¶Ï
+			//
 			if (singlequotecount % 2 == 0 && doublequotecount % 2 == 0) {
-				//ÔÚÒıºÅ°üº¬Ö®Íâ£¬¶Ô×óÓÒÀ¨ºÅ½øĞĞ¼ÆÊı
+				//
 				if(s1.substring(ipos, ipos+1).equals("(")) {
 					leftParenthesescount++;
 				}
@@ -79,20 +70,16 @@ public class StringFindUtil {
 					rightParenthesescount++;
 				}
 				
-				//Èç¹ûµ±Ç°´¦ÀíÄ£Ê½ÔÚÀ¨ºÅÄÚ£¬ÄÇÃ´¾Í²»´¦ÀíºÍ±È½Ï
+				//
 				if(leftParenthesescount  != rightParenthesescount) {
 					continue;
 				}
 				
 				if (s1.substring(ipos, ipos + s2.length()).equals(s2)) {
-					// ÕÒµ½ÁËÕâ¸ö×Ö·û´®,·µ»Ø´ËÎ»ÖÃ
-					// ´ÓÔ­ÀíÉÏ½²£¬Ó¦¸Ã½øĞĞToken±ê×¼ÇĞ·Ö£¬È·±£ÕÒµ½µÄÊÇÒ»¸ö¶ÀÁ¢µÄ¹Ø¼ü´Ê
-					// ¶ø²»ÊÇÁíÍâÒ»¸ö¹Ø¼ü´ÊµÄÒ»²¿·Ö
-					
+					//find it
 					return ipos;
 				}
 			}
-			// Ã»ÓĞÕÒµ½×Ö·û´®£¬Ñ­»·µÈ´ı
 			// goto loop condition.
 		}
 
@@ -100,21 +87,11 @@ public class StringFindUtil {
 		return -1;
 	}
 
-	/**
-	 * MEMO£ºËã·¨ÓëfindFirst»ù±¾ÏàÍ¬£¬Ò»¸ö´ÓÇ°ÍùºóÕÒ£¬Ò»¸ö´ÓºóÍùÇ°ÕÒ
-	 * MEMO£º¿¼ÂÇµ½Ëã·¨¸´ÔÓ¶È£¬findLastµÄËã·¨ĞèÒªÑ­»·µ÷ÓÃfindFirstµÄËã·¨À´ÊµÏÖ
-	 * MEMO:²éÕÒµÄ·½Ïò²»Ò»Ñù
-	 * @param s1
-	 * @param s2
-	 * @return
-	 */
 	public int findLastStringForAST(String s1, String s2) {
 		int ipos1 = this.findfirstStringForAST(s1, s2);
 		if(ipos1 ==-1) {
-			//µÚÒ»¸ö¶¼ÕÒ²»µ½£¬¾Í²»ÓÃÔÙ¼ÌĞøÕÒÏÂÒ»¸öÁË
 			return -1;
 		}else {
-			//ĞŞ¸Äs1µÄÖµ
 			int ipos = ipos1;
 			int ipos2=0;
 			while(ipos2>=0) {
@@ -125,7 +102,6 @@ public class StringFindUtil {
 				ipos2 = this.findfirstStringForAST(stemp, s2);
 				System.out.println("find ipos2:"+ipos2);
 				if(ipos2>0) {
-					//ÓĞĞÂµÄ¼ÇÂ¼,iposµÄÖµ¼ÌĞøºóÒÆ
 					ipos = ipos + ipos2+s2.length();
 				}else {
 					break;
@@ -135,17 +111,9 @@ public class StringFindUtil {
 		}
 		
 	}	
-	// -1´ú±íÃ»ÓĞÕÒµ½
-	// ²ÎÊı´íÎóÊ±£¬ÔÚ¿ØÖÆÌ¨´òÓ¡³ö´íÎóĞÅÏ¢³öÀ´£¬ÔİÊ±²»Å×³öÒì³£
-	// ´úÂë¿é·ÖÎöÊ±Ìá¹©µÄ×Ö·û´®²éÕÒËã·¨
-	// ¹æÔòÈçÏÂ£º
-	// 1. µ¥ÒıºÅÄÚÌø¹ı
-	// 2.Ë«ÒıºÅÄÚÌø¹ı
-	// 3.£¨£©ÄÚÌø¹ı
-	// 4 {}ÄÚÌø¹ı
 	
 	public int findfirstStringForBlock(String s1, String s2) {
-		// NULLÖµ¼ì²é
+		// NULLÖµï¿½ï¿½ï¿½
 		if (s1 == null) {
 			logger.error("ERROR: StringFindUtil.findfirstStringForBlock,s1 is null");
 			return -1;
@@ -156,7 +124,7 @@ public class StringFindUtil {
 			return -1;
 		}
 
-		// empty string ¼ì²é
+		// empty string 
 		if (s1.equals("")) {
 			logger.error("ERROR: StringFindUtil.findfirstStringForBlock,s1 is empty");
 			return -1;
@@ -167,43 +135,32 @@ public class StringFindUtil {
 			return -1;
 		}
 
-		// ¶¨ÒåË«ÒıºÅºÍµ¥ÒıºÅµÄ¼ÆÊıÆ÷
 		int doublequotecount = 0;
 		int singlequotecount = 0;
 		
-		// ¶¨Òå×óÀ¨ºÅ£¬ÓÒÀ¨ºÅµÄ¼ÆÊıÆ÷
-		// ÔÚÀ¨ºÅÄÚµÄÔËËã·û¡¾×óÓÒÀ¨ºÅ³ıÍâ¡¿²»²ÎÓë²éÕÒ
 		int leftParenthesescount =0;
 		int rightParenthesescount = 0;
 
-		// ¶¨Òå×ó´óÀ¨ºÅ£¬ÓÒ´óÀ¨ºÅµÄ¼ÆÊıÆ÷
 		int leftBracketcount=0;
 		int rightBracketcount=0;
 		
-		// ¶¨Òå¿ªÊ¼²éÕÒÎ»ÖÃ
 		int ibeginpos = 0;
-		// ¶¨Òå½áÊø²éÕÒÎ»ÖÃ
 		int iendpos = s1.length() - s2.length() ;
 
 		int ipos;
 		for (ipos = ibeginpos; ipos <= iendpos; ipos++) {
-			// Èç¹ûµ±Ç°Î»ÖÃÊÇ×ªÒå·û£¬Ìø¹ıÏÂÒ»×Ö·û
 			if (s1.substring(ipos, ipos+1).equals("\\")) {
 				ipos++;
-				// Ìø¹ıµ±Ç°×Ö·û£¬¼ÌĞøÑ­»·£¬ÔÚÑ­»·ÖÕÖ¹Ìõ¼ş½«Ìø¹ıÏÂÒ»×Ö·û
 				continue;
 			}
 
-			// ÅĞ¶Ïµ±Ç°Î»ÖÃÊÇ·ñÊÇµ¥ÒıºÅ»òÕßË«ÒıºÅ£¬Èç¹ûÊÇ£¬Ôò¼ÆÊıÆ÷+1
 			if (s1.substring(ipos, ipos+1).equals("'")) {
 				singlequotecount++;
 			} else if (s1.substring(ipos, ipos+1).equals("\"")) {
 				doublequotecount++;
 			}
 
-			// Èç¹ûµ¥ÒıºÅ£¬Ë«ÒıºÅ¾ùÒÑ¾­±ÕºÏ£¬Ôò½øĞĞ×Ö·û´®¼ì²éÅĞ¶Ï
 			if (singlequotecount % 2 == 0 && doublequotecount % 2 == 0) {
-				//ÔÚÒıºÅ°üº¬Ö®Íâ£¬¶Ô×óÓÒÀ¨ºÅ½øĞĞ¼ÆÊı
 				if(s1.substring(ipos, ipos+1).equals("(")) {
 					leftParenthesescount++;
 				}
@@ -217,18 +174,14 @@ public class StringFindUtil {
 					rightBracketcount++;
 				}
 				
-				//Èç¹ûµ±Ç°´¦ÀíÄ£Ê½ÔÚÀ¨ºÅÄÚ£¬ÄÇÃ´¾Í²»´¦ÀíºÍ±È½Ï
 				if(leftParenthesescount  != rightParenthesescount) {
-					//µÚÒ»¸ö×óÀ¨ºÅÊÇ¿ÉÒÔ·µ»ØµÄ
 					if(leftParenthesescount==1 && rightParenthesescount==0 && s2.equals("(")) {
 						return ipos;
 					}
 					continue;
 				}
 				
-				//Èç¹ûµ±Ç°´¦ÀíÄ£Ê½ÔÚ´óÀ¨ºÅÄÚ£¬ÄÇÃ´¾Í²»´¦ÀíºÍ±È½Ï
 				if(leftBracketcount != rightBracketcount) {
-					//µÚÒ»¸ö×ó´óÀ¨ºÅÊÇ¿ÉÒÔ·µ»ØµÄ
 					if(rightBracketcount==0 && leftBracketcount==1 && s2.equals("{") ) {
 						return ipos;
 					}
@@ -237,56 +190,35 @@ public class StringFindUtil {
 				
 				
 				if (s1.substring(ipos, ipos + s2.length()).equals(s2)) {
-					// ÕÒµ½ÁËÕâ¸ö×Ö·û´®,·µ»Ø´ËÎ»ÖÃ
-					// TODO£º´Ë´¦ĞèÒª×ö¶îÍâµÄÅĞ¶Ï£¬È·¶¨µ±Ç°²éÕÒµ½µÄÎ»ÖÃÊÇÒ»¸ö¶ÀÁ¢µÄÎ»ÖÃ½Úµã£¬¶ø²»ÊÇÒ»¸ö±äÁ¿µÄÒ»²¿·Ö
-					// ÀıÈçÒª²éÕÒ and ,ÄÇÃ´ÒªÅÅ³ıland,hand,and1 Ö®Àà
-					// Òò´Ë¿ÉÄÜ»¹ÊÇĞèÒª¶ÔÔ­Ê¼×Ö·û´®ÏÈ½øĞĞÒ»´Î·Ö´Ê²Ù×÷£¬ÒÔÈ·±£ÕÒµ½µÄÎ»ÖÃÊÇÒ»¸öÓĞĞ§Î»ÖÃ
-					// Õâ²¿·Ö´úÂë´ıÏÂÒ»²½²¹³ä¡£
-					
-					//add by liujunsong 2021/03/28
-					//ÅĞ¶Ïµ±Ç°Î»ÖÃÖ®Ç°ÊÇ²»ÊÇ×Ö·û»òÕßÊı×Ö
-					//Èç¹ûÊÇ×Ö·ûºÍÊı×Ö£¬Ôò²»ËãÊı£¬²»¿É·µ»Ø
-					//²»¼ÆËã{;
 					if(ipos>0 && ! s2.equals(";") && !s2.equals("{") && !s2.equals(")")) {
-						//È¡Ò»¸ö×Ö·û
 						char leftchar = s1.charAt(ipos-1);
 						if(leftchar >='0' && leftchar<='9') {
-							//Õâ¸öÊÇÊıÖµ£¬²»ËãÊı
 							continue;
 						}
 						if(leftchar >='a' && leftchar<='z') {
-							//Õâ¸öÊÇĞ¡Ğ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 						if(leftchar >='A' && leftchar<='Z') {
-							//Õâ¸öÊÇ´óĞ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 					}
 					
-					//ÅĞ¶ÏºóĞø×ÖÄ¸ÊÇ·ñÊÇÊı×ÖºÍ×ÖÄ¸£¬Ôò²»ËãÊı
-					//²»¼ÆËã;{
 					if(ipos<s1.length()-s2.length()-1 && !s2.equals(";") && !s2.equals("{")) {
-						//È¡Ò»¸ö×Ö·û
 						char rightChar = s1.charAt(ipos+s2.length());
 						logger.error("rightChar is:"+rightChar);
 						if(rightChar >='0' && rightChar<='9') {
-							//Õâ¸öÊÇÊıÖµ£¬²»ËãÊı
 							continue;
 						}
 						if(rightChar >='a' && rightChar<='z') {
-							//Õâ¸öÊÇĞ¡Ğ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 						if(rightChar >='A' && rightChar<='Z') {
-							//Õâ¸öÊÇ´óĞ´×ÖÄ¸£¬²»ËãÊı
 							continue;
 						}
 					}					
 					return ipos;
 				}
 			}
-			// Ã»ÓĞÕÒµ½×Ö·û´®£¬Ñ­»·µÈ´ı
 			// goto loop condition.
 		}
 
@@ -294,19 +226,10 @@ public class StringFindUtil {
 		return -1;
 	}
 
-	/**
-	 * ½«×Ö·û´®¿ªÊ¼ºÍ½áÊøÎ»ÖÃµÄ\r\n ,\r,¿Õ¸ñ¶¼¹ıÂËµô
-	 * 
-	 * @param strinput
-	 * @return
-	 */
 	public String trimReturnAndSpace(String strinput) {
-		//String sout = "";
-		// ÏÈ²éÕÒµÚÒ»¸ö²»ÊÇ\r\n \r ¿Õ¸ñµÄÎ»ÖÃ
 		int ipos = -1;
 		for (int i = 0; i < strinput.length(); i++) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
 				continue;
 			} else {
 				ipos = i;
@@ -315,15 +238,13 @@ public class StringFindUtil {
 		}
 
 		if (ipos == -1) {
-			// Ã»ÓĞÕÒµ½ÓĞĞ§×Ö·û
 			return "";
 		}
 
-		// ¿ªÊ¼´ÓºóÍùÇ°²éÕÒµÚÒ»¸öÓĞĞ§×Ö·û
 		int ipos2 = -1;
 		for (int i = strinput.length() - 1; i >= 0; i--) {
 			if (strinput.charAt(i) == '\r' || strinput.charAt(i) == '\n' || strinput.charAt(i) == ' ') {
-				// ¼ÌĞøÑ­»·
+				// ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
 				continue;
 			} else {
 				ipos2 = i;
@@ -331,11 +252,10 @@ public class StringFindUtil {
 			}
 		}
 
-		// ÓÉÓÚiposÓĞĞ§£¬ËùÒÔipos2Ò»¶¨Ò²ÊÇÓĞĞ§µÄ
 		if (ipos2 >= ipos) {
 			return strinput.substring(ipos, ipos2 + 1);
 		} else {
-			logger.error("³ÌĞòÖ´ĞĞ³öÏÖ´íÎó£¬ĞèÒª²éÕÒÎÊÌâËùÔÚ.ipos,ipos2=" + ipos + "," + ipos2);
+			logger.error("[ERROR].ipos,ipos2=" + ipos + "," + ipos2);
 			return "";
 		}
 	}

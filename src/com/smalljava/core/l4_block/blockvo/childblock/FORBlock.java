@@ -3,27 +3,22 @@ package com.smalljava.core.l4_block.blockvo.childblock;
 import com.smalljava.core.l4_block.SmallJavaBlockConst;
 import com.smalljava.core.l4_block.blockvo.BasicBlock;
 
-/**|
- * While 代码块定义
- * @author liujunsong
- *
- */
 public class FORBlock extends BasicBlock {
 	/**
-	 * 开始节点
+	 * 锟斤拷始锟节碉拷
 	 */
 	private BasicBlock beginNode;
 	/**
-	 * 循环结束条件节点
+	 * 循锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟节碉拷
 	 */
 	private BasicBlock forconditionNode;
 	/**
-	 * 循环执行节点
+	 * 循锟斤拷执锟叫节碉拷
 	 */
 	private BasicBlock loopNode;
 
 	/**
-	 * for语句的循环体,这个循环体也是一个Block
+	 * for锟斤拷锟斤拷循锟斤拷锟斤拷,锟斤拷锟窖拷锟斤拷锟揭诧拷锟揭伙拷锟紹lock
 	 */
 	private BasicBlock forloopBlock;
 

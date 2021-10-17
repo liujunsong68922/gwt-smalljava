@@ -1,12 +1,8 @@
 package com.smalljava.core.common;
 
 public class VarValue {
-	//变量名
 	private String varname=null;
-	//变量基础类型
 	public String vartype=null;
-	//变量值，用字符串表示字符串类型的值，
-	//如果是对象，这里存放一个uuid，代表在对象内存表中的映射位置
 	public String varsvalue="";
 	
 	public String getVarname() {

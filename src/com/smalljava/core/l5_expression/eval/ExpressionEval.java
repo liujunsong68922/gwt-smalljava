@@ -41,64 +41,47 @@ import com.smalljava.core.l9_space.vartable.IVarTable;
 
 public class ExpressionEval implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(ExpressionEval.class);
-	
+
 	private static HashMap<String, IExpressionEval> evalmap = new HashMap<String, IExpressionEval>();
 
-	/**
-	 * ËùÓÐRootAST½ÚµãµÄ¼ÆËã½á¹û¾ùÒÔString¸ñÊ½·µ»Ø
-	 */
 	public VarValue eval(RootAST root, IVarTable vartable, IClassTable classtable) {
-		// ÅÐ¶Ï±äÁ¿±íÊÇ·ñÎªnull
-		if(vartable == null) {
+		if (vartable == null) {
 			logger.error("[Argument error],vartable is null.begin show");
 			root.show(0);
 			return null;
 		}
 
-		
-		// Part1:ÎÞ×Ó½ÚµãµÄÒ¶×Ó²¿·Ö½ÚµãµÄÆÀ¹À¼ÆËã¹æÔò
-		// step0.ÅÐ”àÊÇ²»ÊÇÖÐ¼ä½Úµã
 		if (root instanceof MiddleAST) {
 			MiddleAST middle = (MiddleAST) root;
 			RootAST child = middle.getChildren().get(0);
-			// Ìø¹ýMiddleAST½Úµã£¬µÝ¹éµ÷ÓÃ
 			return eval(child, vartable, classtable);
 		}
-		
 
-		// step1.Èç¹ûrootÊÇ³£Á¿½Úµã£¬Ôò·µ»Ø³£Á¿
 		if (root instanceof AbstractConstDataElement) {
 			ConstEvalPlugin consteval = new ConstEvalPlugin();
 			return consteval.eval(root, vartable, classtable);
 		}
 
-		// step2.Èç¹ûÊÇrootÊÇÒ»¸ö±äÁ¿½Úµã£¬Ôò·µ»Ø±äÁ¿½áËã½á¹û
-		// Èç¹ûÊÇÓÉ¸³ÖµÔËËã·ûÍÆ¶¯£¬Ôò×óÃæµÄ±äÁ¿×÷Îª²ÎÊýÊ¹ÓÃ£¬¶ø²»×÷Îª±äÁ¿Ê¹ÓÃ
 		if (root instanceof VarDataElement) {
 			VariableEvalPlugin vareval = new VariableEvalPlugin();
 			return vareval.eval(root, vartable, classtable);
 		}
 
-		// step3.Èç¹ûrootÊÇÒ»¸önew²Ù×÷·û£¬·µ»ØÐÂ´´½¨µÄ¶ÔÏó±äÁ¿
 		if (root instanceof NewOperElement) {
 			NewOperEvalPlugin neweval = new NewOperEvalPlugin();
 			return neweval.eval(root, vartable, classtable);
 		}
 
-		// step4.Èç¹ûrootÊÇÒ»¸ö±äÁ¿¶¨Òå²Ù×÷·û£¬ÔòÖ´ÐÐ±äÁ¿¶¨Òå
 		if (root instanceof VarDefineOperElement) {
 			DefineOperEvalPlugin defineeval = new DefineOperEvalPlugin();
 			return defineeval.eval(root, vartable, classtable);
 		}
 
-		// step5.Èç¹ûrootÊÇÒ»¸öAtom,Ôòµ÷ÓÃAtomÖ´ÐÐÆ÷Ö´ÐÐ
 		if (root instanceof AtomElement) {
 			AtomEvalPlugin atomeval = new AtomEvalPlugin();
 			return atomeval.eval(root, vartable, classtable);
 		}
 
-		// Part2. Ò»ÔªÔËËã·ûµÄÖ§³Ö²¿·Ö,ÔÝÊ±Ö»Ö§³ÖÂß¼­È¡·ñµÄÔËËã·û
-		// step6.Âß¼­È¡·´µÄ²Ù×÷Ö§³Ö
 		if (root instanceof LogicNotOperElement) {
 			LogicNotPlugin logicnoteval = new LogicNotPlugin();
 			return logicnoteval.eval(root, vartable, classtable);
@@ -106,43 +89,32 @@ public class ExpressionEval implements IExpressionEval {
 
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
-			// ²»Í¬µÄÔËËã·û£¬µ÷ÓÃ²»Í¬µÄ´¦ÀíÆ÷
-			logger.info("opercode:"+oper.getOpercode());
+			logger.info("opercode:" + oper.getOpercode());
 			IExpressionEval eeval = this.getEvalPluginByOpercode(oper.getOpercode());
-			if(eeval == null) {
-				logger.error("Cannot find oper expressioneval:"+oper.getOpercode());
+			if (eeval == null) {
+				logger.error("Cannot find oper expressioneval:" + oper.getOpercode());
 				return null;
 			}
 			return eeval.eval(root, vartable, classtable);
 		}
 
-		// Part3.¶þÔªÔËËã·ûµÄÖ§³Ö²¿·Ö£¬ÕâÒ»²¿·ÖÒ²È«²¿ÒÀ¾Ý±í´ïÊ½ÖØÐ´
-		// step7 ¸³ÖµÔËËã·ûµÄÖ§³Ö
 		if (root instanceof VarSetOperElement) {
 			VarSetEvalPlugin varseteval = new VarSetEvalPlugin();
 			return varseteval.eval(root, vartable, classtable);
 		}
 
-		// Part4 ¶ÔÏóµ÷ÓÃµÄ²¿·Ö
 		if (root instanceof ObjectCallOperElement) {
 			ObjectCallOperElement objectcall = (ObjectCallOperElement) root;
-			//µ÷ÓÃ¶ÔÏóµ÷ÓÃÖ´ÐÐÆ÷
+			// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½
 			ObjectCallEvalPlugin objcalleval = new ObjectCallEvalPlugin();
 			return objcalleval.eval(root, vartable, classtable);
 		}
-		
-		// Part5 Èç¹ûÖ´ÐÐ¶¼ÕâÀï£¬ËµÃ÷ÉÏÃæµÄÂß¼­¶¼Ã»ÓÐÃüÖÐ
-		// ÕâÖÖÇé¿öÏÂÊÇÊôÓÚÖ´ÐÐ´íÎó
-		logger.error("---->Ö´ÐÐ³ö´íÁË¡£{"+root.getShowString(0)+"}");
+
+		logger.error("---->Ö´ï¿½Ð³ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½{" + root.getShowString(0) + "}");
 		root.show(0);
 		return null;
 	}
 
-	/**
-	 * MEMO£º¸ù¾ÝÔËËã·ûÀ´»ñÈ¡¶ÔÓ¦µÄ¼ÆËã´¦Àí²å¼þ
-	 * @param opercode
-	 * @return
-	 */
 	private IExpressionEval getEvalPluginByOpercode(String opercode) {
 		initEvalMap();
 		return evalmap.get(opercode);
@@ -150,13 +122,11 @@ public class ExpressionEval implements IExpressionEval {
 
 	private static void initEvalMap() {
 		if (evalmap.size() == 0) {
-			//ÏÈ¼ÓÈëËãÊõÔËËã·û
 			evalmap.put("+", new MathAddOperEvalPlugin());
 			evalmap.put("-", new MathDeAddOperEvalPlugin());
 			evalmap.put("*", new MathMultiOperEvalPlugin());
 			evalmap.put("/", new MathDevideOperEvalPlugin());
 
-			//ÔÙ¼ÓÈëÂß¼­ÔËËã·û
 			evalmap.put("&&", new LogicAndOperEvalPlugin());
 			evalmap.put("||", new LogicOrOperEvalPlugin());
 			evalmap.put(">", new LogicGreaterOperEvalPlugin());
@@ -167,5 +137,4 @@ public class ExpressionEval implements IExpressionEval {
 			evalmap.put("!=", new LogicNotEqualOperEvalPlugin());
 		}
 	}
-
 }

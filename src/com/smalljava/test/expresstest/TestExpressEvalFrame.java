@@ -48,14 +48,14 @@ public class TestExpressEvalFrame {
 }
 
 class TestMainFrame extends JFrame {
-	private Label label1 = new Label("Õâ¸öÒ³ÃæÓÃÀ´²âÊÔSmallJavaµÄ±í´ïÊ½½âÎöÓëÖ´ÐÐ¹¦ÄÜ.");
+	private Label label1 = new Label("smalljava testframe.");
 
 	TestFrameButtonPanel buttonpanel = new TestFrameButtonPanel();
 
 	static JTextArea sourcecode = new JTextArea("");
 	static JTextArea asttree = new JTextArea("");
 
-	// °Ñ¶¨ÒåµÄJTextArea·Åµ½JScrollPaneÀïÃæÈ¥
+	
 	static JScrollPane scroll = new JScrollPane(asttree);
 
 	static JPanel treepanel = new JPanel();
@@ -81,7 +81,7 @@ class TestMainFrame extends JFrame {
 		// asttree.setBorder(BorderFactory.createLineBorder(Color.red, 2));
 		// asttree.setBounds(10, 250, 760, 150);
 
-		// ·Ö±ðÉèÖÃË®Æ½ºÍ´¹Ö±¹ö¶¯Ìõ×ÜÊÇ³öÏÖ
+		// ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½Í´ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½ï¿½ï¿½
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.add(scroll);
@@ -162,13 +162,13 @@ class TestMainFrame extends JFrame {
 
 				RootAST root = eanlyse.analyse(stext);
 				if (root == null) {
-					System.out.println("---->ast Ê§°Ü");
+					System.out.println("---->ast Ê§ï¿½ï¿½");
 					//String s1 = root.getShowString(0);
-					String s2 = "----->ast Ê§°Ü\r\n" ;
+					String s2 = "----->ast Ê§ï¿½ï¿½\r\n" ;
 					TestMainFrame.asttree.setText(s2);
 					return;
 				} else {
-					System.out.println("---->ast ³É¹¦");
+					System.out.println("---->ast ï¿½É¹ï¿½");
 					root.show(0);
 					String s1 = root.getShowString(0);
 					System.out.println(s1);
@@ -203,16 +203,16 @@ class TestMainFrame extends JFrame {
 
 				RootAST root = eanlyse.analyse(stext);
 				if (root == null) {
-					System.out.println("---->ast Ê§°Ü");
+					System.out.println("---->ast Ê§ï¿½ï¿½");
 					//String s1 = root.getShowString(0);
-					String s2 = "----->ast Ê§°Ü\r\n" ;
+					String s2 = "----->ast Ê§ï¿½ï¿½\r\n" ;
 					TestMainFrame.asttree.setText(s2);
 					return;
 				} else {
-					System.out.println("---->ast ³É¹¦");
+					System.out.println("---->ast ï¿½É¹ï¿½");
 
-					//µ÷ÓÃÖ´ÐÐ¹¤¾ßÀ´½øÐÐ¼ÆËã
-					//´ÓL2¼¶±ð¿ªÊ¼¹¹½¨±äÁ¿±í
+					//ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½
+					//ï¿½ï¿½L2ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					L2_HashMapClassStaticVarTableImpl l2_static = new L2_HashMapClassStaticVarTableImpl("");
 					L2_HashMapClassInstanceVarTableImpl l2_instance = new L2_HashMapClassInstanceVarTableImpl("l2",l2_static);
 					L3_HashMapMethodInstanceVarTableImpl l3 = new L3_HashMapMethodInstanceVarTableImpl("",l2_instance);
@@ -225,9 +225,9 @@ class TestMainFrame extends JFrame {
 					ExpressionEval eval = new ExpressionEval();
 					VarValue vv = eval.eval(root, vartable, classtable);
 					if(vv == null) {
-						System.out.println("±í´ïÊ½¼ÆËãÊ§°Ü:vv is null");
+						System.out.println("ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½:vv is null");
 					}else {
-						System.out.println("¼ÆËã½á¹û:"+vv.toString());
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+vv.toString());
 					}
 
 				}
@@ -253,8 +253,8 @@ class TestFrameButtonPanel extends JPanel {
 	static String stext5 = "1+1";
 	static String stext6 = "1*1";
 
-	JButton analysebutton = new JButton("Analyse(Óï·¨·ÖÎö)");
-	JButton evalbutton = new JButton("Eval(Ö´ÐÐ)");
+	JButton analysebutton = new JButton("Analyse(ï¿½ï·¨ï¿½ï¿½ï¿½ï¿½)");
+	JButton evalbutton = new JButton("Eval(Ö´ï¿½ï¿½)");
 
 	public TestFrameButtonPanel() {
 		this.add(b1);

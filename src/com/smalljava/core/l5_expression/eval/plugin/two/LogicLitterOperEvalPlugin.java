@@ -14,12 +14,6 @@ import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * MEMO 执行加法运算
- * 
- * @author liujunsong
- *
- */
 public class LogicLitterOperEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(LogicLitterOperEvalPlugin.class);
 
@@ -31,27 +25,27 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
-			// 加法计算
+			
 			if (oper.getOpercode().equals("<")) {
 				RootAST leftelement = oper.getChildren().get(0);
 				RootAST rightelement = oper.getChildren().get(1);
-				// 生成一个新的评估器
+				
 				ExpressionEval eeval = new ExpressionEval();
 				VarValue leftvar = eeval.eval(leftelement, vartable, classtable);
 				VarValue rightvar = eeval.eval(rightelement, vartable, classtable);
 				if (leftvar == null || rightvar == null) {
-					logger.error("加法计算失败，参数为null");
+					logger.error("leftvar or rightvar is null");
 					return null;
 				}
 
 				if (leftvar.getVartype() == null) {
-					logger.error("程序逻辑错误，左操作对象类型为null");
+					logger.error("leftvar vartype is null");
 					return null;
 				}
 				logger.info("leftvar vartype:" + leftvar.getVartype());
 				if (leftvar.getVartype().equals("int")) {
 					IntegerValue intoper = new IntegerValue(leftvar.getVarsvalue());
-					logger.info("int右面操作数:" + rightvar.getVarsvalue());
+					logger.info("int value :" + rightvar.getVarsvalue());
 					boolean b1 = intoper.doLitter(rightvar.getVarsvalue());
 					VarValue varvalue1 = new VarValue();
 					varvalue1.setVarname("");
@@ -62,8 +56,8 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
-					// 把第二个节点的字符串传进去
-					logger.info("Long右面操作数:" + rightvar.getVarsvalue());
+					
+					logger.info("Long value :" + rightvar.getVarsvalue());
 					boolean b2 = longoper.doLitter(rightvar.getVarsvalue());
 					VarValue varvalue2 = new VarValue();
 					varvalue2.setVarname("");
@@ -75,7 +69,7 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
-					logger.info("Float右面操作数:" + rightvar.getVarsvalue());
+					logger.info("Float value :" + rightvar.getVarsvalue());
 					boolean b3 = floatoper.doLitter(rightvar.getVarsvalue());
 					VarValue varvalue3 = new VarValue();
 					varvalue3.setVarname("");
@@ -86,9 +80,8 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
-					;
-					// 把第二个节点的字符串传进去
-					logger.info("Double右面操作数:" + rightvar.getVarsvalue());
+					
+					logger.info("Double value :" + rightvar.getVarsvalue());
 					boolean b4 = doubleoper.doLitter(rightvar.getVarsvalue());
 					VarValue varvalue4 = new VarValue();
 					varvalue4.setVarname("");
@@ -96,7 +89,7 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 					varvalue4.setVarsvalue("" + b4);
 					return varvalue4;
 				}
-				logger.error("【ERROR】< 操作遇到了不支持的数据类型：" + leftvar.getVartype());
+				logger.error("[error]unsupported vartype: " + leftvar.getVartype());
 				return null;
 
 			}

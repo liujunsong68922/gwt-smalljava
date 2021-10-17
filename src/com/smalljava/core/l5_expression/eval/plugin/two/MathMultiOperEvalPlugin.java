@@ -14,11 +14,6 @@ import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-/**
- * MEMO 执行乘法运算
- * @author liujunsong
- *
- */
 public class MathMultiOperEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(MathMultiOperEvalPlugin.class);
 	
@@ -30,21 +25,19 @@ public class MathMultiOperEvalPlugin implements IExpressionEval {
 
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
-			// 乘法计算
 			if (oper.getOpercode().equals("*")) {
 				RootAST leftelement = oper.getChildren().get(0);
 				RootAST rightelement = oper.getChildren().get(1);
-				// 生成一个新的评估器
 				ExpressionEval eeval = new ExpressionEval();
 				VarValue leftvar = eeval.eval(leftelement, vartable, classtable);
 				VarValue rightvar = eeval.eval(rightelement, vartable, classtable);
 				if (leftvar == null || rightvar == null) {
-					logger.error("乘法计算失败，参数为null");
+					logger.error("leftvar or rightvar is null");
 					return null;
 				}
 
 				if (leftvar.getVartype() == null) {
-					logger.error("程序逻辑错误，左操作对象类型为null");
+					logger.error("leftvar vartype is 为null");
 					return null;
 				}
 				if (leftvar.getVartype().equals("int")) {
@@ -54,26 +47,25 @@ public class MathMultiOperEvalPlugin implements IExpressionEval {
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
-					// 把第二个节点的字符串传进去
-					logger.error("Long右面操作数:" + rightvar.getVarsvalue());
+					
+					logger.error("Long value :" + rightvar.getVarsvalue());
 					longoper.doMulti(rightvar.getVarsvalue());
 					return longoper;
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
-					logger.error("Float右面操作数:" + rightvar.getVarsvalue());
+					logger.error("Float value :" + rightvar.getVarsvalue());
 					floatoper.doMulti(rightvar.getVarsvalue());
 					return floatoper;
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
-					;
-					// 把第二个节点的字符串传进去
-					logger.error("Double右面操作数:" + rightvar.getVarsvalue());
+					
+					logger.error("Double value :" + rightvar.getVarsvalue());
 					doubleoper.doMulti(rightvar.getVarsvalue());
 					return doubleoper;
 				}
-				logger.error("【ERROR】减号操作遇到了不支持的数据类型：" + leftvar.getVartype());
+				logger.error("[error]unsupported vartype:" + leftvar.getVartype());
 				return null;
 
 			}

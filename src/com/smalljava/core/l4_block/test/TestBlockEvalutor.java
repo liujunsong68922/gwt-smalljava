@@ -25,10 +25,10 @@ public class TestBlockEvalutor {
 		L3_HashMapMethodInstanceVarTableImpl vartable3 = new L3_HashMapMethodInstanceVarTableImpl("",vartable2);
 		L4_HashMapBlockVarTableImpl vartable4 = new L4_HashMapBlockVarTableImpl("",vartable3);
 		boolean b2 = node.execute(b1,vartable4,classtable);
-//		System.out.println("¼ÆËã½áÊø£¡½á¹û£º"+b2);
-//		System.out.println("");
-//		System.out.println("ÏÔÊ¾Var:");
-//		b1.showvar(0);
+		System.out.println("exeute result:"+b2);
+		System.out.println("");
+		System.out.println("Var:");
+		b1.showvar(0);
 	}
 	
 	private static BasicBlock testAnalyseByBlock() {
@@ -63,7 +63,7 @@ public class TestBlockEvalutor {
 		System.out.println("");
 		System.out.println("");
 		closedblock.show(0);
-		System.out.println("·ÖÎö½á¹û£º"+isok);	
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+isok);	
 		
 		return closedblock;
 	}

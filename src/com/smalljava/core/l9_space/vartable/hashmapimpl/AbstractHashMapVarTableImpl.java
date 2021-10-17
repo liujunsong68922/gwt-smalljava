@@ -11,46 +11,28 @@ import com.smalljava.core.l9_space.vartable.IVarTable;
 public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	private Logger logger = LoggerFactory.getLogger(AbstractHashMapVarTableImpl.class);
 
-	/**
-	 * ÄÚ²¿µÄHashMap´æ´¢£¬Õâ¸ö´æ´¢Ä¿Ç°Ö»´æ´¢»ù´¡ÀàĞÍ£¬Òò´ËÊ¹ÓÃStringÀ´´æ´¢¾ßÌåÊı¾İ
-	 */
 	protected HashMap<String, VarValue> myvarmap = new HashMap<String, VarValue>();
 	
-	/**
-	 * ±äÁ¿±íµÄÀàĞÍ
-	 */
 	private String vartabletypename = "";
-	/**
-	 * ±äÁ¿±íµÄ¸¸½ÚµãµÄ¶¨Òå
-	 */
 	private AbstractHashMapVarTableImpl parentVarTable = null;
-	/**
-	 * ÊÇ·ñÊÇ¸ùµÄ±äÁ¿±í½Úµã
-	 */
 	private boolean rootflag = false;
 
-	/**
-	 * ¹¹Ôìº¯Êı£¬´øÓĞÀàĞÍ²ÎÊı
-	 * 
-	 * @param stype
-	 * @param parentnode
-	 */
 	public AbstractHashMapVarTableImpl(String stype, AbstractHashMapVarTableImpl parentnode) {
 
 		this.vartabletypename = stype;
 		this.parentVarTable = parentnode;
 		logger.info("init,vartabletypename:"+vartabletypename);		
 		if (parentnode != null) {
-			// ÉèÖÃÎª²»ÊÇ¸ù½Úµã
+			// ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ç¸ï¿½ï¿½Úµï¿½
 			this.rootflag = false;
 		} else {
-			// ÉèÖÃÎª¸ù½Úµã
+			// ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Úµï¿½
 			this.rootflag = true;
 		}
 	}
 
 	/**
-	 * ¹¹Ôìº¯Êı£¬´øÓĞÀàĞÍ²ÎÊı,µ«²»´ø¸¸¼¶½Úµã£¬ÕâÑùÕâ¸ö½Úµã¾ÍÊÇÒ»¸ö¸ù½ÚµãÁË
+	 * ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½
 	 * 
 	 * @param stype
 	 * @param parentnode
@@ -62,7 +44,7 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	}
 	
 	/**
-	 * MEMO£º½«²»´ø²ÎÊıµÄ¹¹Ôìº¯ÊıÒş²Øµô
+	 * MEMOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½
 	 */
 	@SuppressWarnings("unused")
 	private AbstractHashMapVarTableImpl() {
@@ -71,7 +53,7 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 
 
 	/**
-	 * ¸ù¾İvarname´ÓVarMapNodeÖĞ»ñÈ¡ÊıÖµ£¬Èç¹ûÕÒ²»µ½£¬Ôò·µ»Ønull,
+	 * ï¿½ï¿½ï¿½ï¿½varnameï¿½ï¿½VarMapNodeï¿½Ğ»ï¿½È¡ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½null,
 	 * 
 	 * @param varname
 	 * @return
@@ -79,35 +61,35 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	public VarValue getVarValue(String varname) {
 		HashMap<String, VarValue> varmap = this.myvarmap;
 		if (varmap == null) {
-			logger.error("¡¾ERROR¡¿²éÕÒ±äÁ¿±íÊ§°Ü.");
+			logger.error("ï¿½ï¿½ERRORï¿½ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½.");
 			return null;
 		}
 
 		AbstractHashMapVarTableImpl pvartable = this;
-		// Ñ­»·¿ªÊ¼
+		// Ñ­ï¿½ï¿½ï¿½ï¿½Ê¼
 		while (pvartable.getMyvarmap() != null) {
 			varmap = pvartable.getMyvarmap();
 
 			if (varmap.containsKey(varname)) {
-				// Èç¹ûvarname±»¶¨ÒåÎªÒ»¸ö±¾µØ±äÁ¿£¬Ôò´Ó±¾µØHashMapÖĞ»ñÈ¡ÆäÖµ
+				// ï¿½ï¿½ï¿½varnameï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÒ»ï¿½ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½HashMapï¿½Ğ»ï¿½È¡ï¿½ï¿½Öµ
 				VarValue varvalue = varmap.get(varname);
 				return varvalue;
 			}
-			//Ö¸Ïò¸¸½Úµã
+			//Ö¸ï¿½ò¸¸½Úµï¿½
 			if(pvartable.getParentVarTable()!=null) {
 				pvartable = pvartable.getParentVarTable();
 			}else {
-				//Ìø³öÑ­»·
+				//ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
 				break;
 			}
 		}
 
-		// Ñ­»·²éÕÒ£¬Ö¸µ½ÕÒ²»µ½varname,Ôò·µ»Ønull´ú±íÕÒ²»µ½Õâ¸ö±äÁ¿
+		// Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½Ö¸ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½varname,ï¿½ò·µ»ï¿½nullï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return null;
 	}
 
 	/**
-	 * ±äÁ¿¸³Öµ£¬Ê×ÏÈÕÒµ½Õâ¸ö±äÁ¿£¬È»ºóÔÙ¸³Öµ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½Ù¸ï¿½Öµ
 	 * 
 	 * @param varname
 	 * @param varvalue
@@ -116,23 +98,23 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	public boolean setVarValue(String varname, VarValue varvalue) {
 		HashMap<String, VarValue> varmap = this.myvarmap;
 		if (varmap == null) {
-			logger.error("²éÕÒ±äÁ¿±íÊ§°Ü.");
+			logger.error("ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½.");
 			return false;
 		}
 		if (varname == null || varname.length() == 0) {
-			logger.error("setVarValue³ÌĞò´úÂëÓĞÎó£¬±äÁ¿ÃûÎª¿Õ»òÕßÎª¿Õ×Ö·û´®");
+			logger.error("setVarValueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬±ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ»ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½");
 			return false;
 		}
 		if (varvalue == null) {
-			logger.error("setVarValue³ÌĞò´úÂëÓĞÎó£¬±äÁ¿ÉèÖÃ²ÎÊıÎªnull");
+			logger.error("setVarValueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Îªnull");
 			return false;
 		}
 		VarValue vvalue = this.getVarValue(varname);
 		if (vvalue == null) {
-			logger.error("setVarValue³ÌĞòÖ´ĞĞÓĞÎó£¬Ã»ÓĞÕÒµ½±äÁ¿¶¨Òå£º" + varname);
+			logger.error("setVarValueï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£º" + varname);
 			return false;
 		} else {
-			logger.info("´Ó±äÁ¿±íÖĞ²éÕÒ±äÁ¿³É¹¦."+varname);
+			logger.info("ï¿½Ó±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ²ï¿½ï¿½Ò±ï¿½ï¿½ï¿½ï¿½É¹ï¿½."+varname);
 			vvalue.setVarname(varname);
 			vvalue.setVartype(varvalue.getVartype());
 			vvalue.setVarsvalue(varvalue.getVarsvalue());
@@ -141,7 +123,7 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	}
 
 	/**
-	 * ¡¾±äÁ¿ÉèÖÃ¡¿Ëã·¨ÃèÊö£ºÏÈÕÒµ½µÚÒ»¸ö¿ÉÓÃµÄ±äÁ¿±í£¬ÔÚÕâ¸ö±äÁ¿±íÖĞ¶¨Òå±äÁ¿Öµ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	 * 
 	 * @param varname
 	 * @param vartype
@@ -150,15 +132,15 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	public boolean defineVar(String varname, String vartype) {
 		HashMap<String, VarValue> varmap = this.myvarmap;
 		if (varmap == null) {
-			logger.error("²éÕÒ±äÁ¿±íÊ§°Ü.");
+			logger.error("ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½.");
 			return false;
 		}
 		if (varmap.containsKey(varname)) {
-			logger.error("³ÌĞò´úÂëÓĞÎó£¬´Ë´¦ÓĞÖØ¸´¶¨ÒåµÄ±äÁ¿Ãû:" + varname);
+			logger.error("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬´Ë´ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½:" + varname);
 			return false;
 		}
 		if (vartype == null) {
-			logger.error("³ÌĞò´úÂëÓĞÎó£¬±äÁ¿¶¨ÒåÊ±ÀàĞÍÎª¿Õ." + varname);
+			logger.error("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½." + varname);
 			return false;
 		}
 
@@ -172,16 +154,16 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 		} else if (vartype.equals("String")) {
 			varvalue.setVarsvalue("");
 		} else {
-			// ÀàĞÍÎª¶ÔÏóÊ±£¬svalue´ú±íÓ³ÉäµØÖ·,""¾Í´ú±íÊÇÒ»¸önullÖµ
+			// ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½svalueï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½Ö·,""ï¿½Í´ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½nullÖµ
 			varvalue.setVarsvalue("");
 		}
-		//Ğ´Èëµ±Ç°½ÚµãµÄ±äÁ¿±í
+		//Ğ´ï¿½ëµ±Ç°ï¿½Úµï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
 		varmap.put(varname, varvalue);
 		return true;
 	}
 
 	/**
-	 * MEMO:ÅĞ¶ÏÊÇ·ñÊÇÓĞĞ§±äÁ¿
+	 * MEMO:ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½
 	 */
 	@Override
 	public boolean isValid(String varname) {

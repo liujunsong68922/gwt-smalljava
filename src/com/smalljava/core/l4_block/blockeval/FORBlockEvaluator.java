@@ -17,9 +17,9 @@ public class FORBlockEvaluator {
 
 	@SuppressWarnings("static-access")
 	public boolean execute(FORBlock block,L4_HashMapBlockVarTableImpl vartable,IClassTable classtable) throws Exception {
-		log("---------->Ö´ÐÐfor½Úµã");
+		log("---------->enter forblock eval");
 
-		//step1:Ö´ÐÐ¿ªÊ¼½Úµã
+		//step1:
 		//ASTTreeNode node = new ASTTreeNode(block.getBeginNode().getBlockContent(),0);
 		RootAST node = expressionASTAnalyse.analyse(block.getBeginNode().getBlockContent());
 		//node.analyseTree();
@@ -32,12 +32,12 @@ public class FORBlockEvaluator {
 		//boolean b1 = node.eval(block,classtable);
 		VarValue b1 = expressionEval.eval(node, vartable, classtable);
 		if(b1 == null) {
-			log("¡¾ERROR¡¿IF½ÚµãÖ´ÐÐbegin½Úµã³ö´í."+block.getBeginNode().getBlockContent());
+			log("ï¿½ï¿½ERRORï¿½ï¿½IFï¿½Úµï¿½Ö´ï¿½ï¿½beginï¿½Úµï¿½ï¿½ï¿½ï¿½."+block.getBeginNode().getBlockContent());
 			return false;
 		}
 		//this.beginNode.execute();
-		//step2:Ö´ÐÐÅÐ¶ÏÌõ¼þ
-		//logger.error("while Ìõ¼þ±í´ïÊ½:" + this.forcondition);
+		//step2:Ö´ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
+		//logger.error("while ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½:" + this.forcondition);
 		//ASTTreeNode node2 = new ASTTreeNode(block.getForconditionNode().getBlockContent(), 0);
 		RootAST node2 =expressionASTAnalyse.analyse(block.getForconditionNode().getBlockContent());
 		
@@ -52,17 +52,17 @@ public class FORBlockEvaluator {
 		//boolean b2 = node2.eval(block,classtable);
 		VarValue b2 = expressionEval.eval(node2, vartable, classtable);
 		if(b2 == null) {
-			log("¡¾ERROR¡¿IF½ÚµãÖ´ÐÐcondition½Úµã³ö´í."+block.getForconditionNode().getBlockContent());
+			log("ï¿½ï¿½ERRORï¿½ï¿½IFï¿½Úµï¿½Ö´ï¿½ï¿½conditionï¿½Úµï¿½ï¿½ï¿½ï¿½."+block.getForconditionNode().getBlockContent());
 			return false;
 		}
-		logger.error("forÌõ¼þ¼ÆËã½á¹û1£º" + b2.getVarsvalue());
+		logger.error("forï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½" + b2.getVarsvalue());
 		
 		while (b2.getVarsvalue().equalsIgnoreCase("true")) {
-			//step3.Ö´ÐÐ´úÂë¿é
+			//step3.Ö´ï¿½Ð´ï¿½ï¿½ï¿½ï¿½
 			BlockEvaluator be = new BlockEvaluator();
 			boolean b3 = be.execute(block.getForloopBlock(),vartable,classtable);
 			if(! b3) {
-				log("¡¾ERROR¡¿IF½ÚµãÖ´ÐÐloop¿é³ö´í."+block.getForloopBlock().getBlockContent());
+				log("ï¿½ï¿½ERRORï¿½ï¿½IFï¿½Úµï¿½Ö´ï¿½ï¿½loopï¿½ï¿½ï¿½ï¿½ï¿½."+block.getForloopBlock().getBlockContent());
 				return false;
 				
 			}
@@ -80,11 +80,11 @@ public class FORBlockEvaluator {
 			//boolean b4 = node3.eval(block,classtable);
 			VarValue b4 = expressionEval.eval(node3, vartable, classtable);
 			if(b4 == null) {
-				log("¡¾ERROR¡¿Ö´ÐÐloop½Úµã³ö´í"+block.getLoopNode().getBlockContent());
+				log("ï¿½ï¿½ERRORï¿½ï¿½Ö´ï¿½ï¿½loopï¿½Úµï¿½ï¿½ï¿½ï¿½"+block.getLoopNode().getBlockContent());
 				return false;
 			}
 					
-			//ÖØÐÂ¼ÆËãÅÐ¶ÏÌõ¼þ
+			//ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
 			//node2 = new ASTTreeNode(block.getForconditionNode().getBlockContent(), 0);
 			node2 =expressionASTAnalyse.analyse(block.getForconditionNode().getBlockContent());
 			//node2.analyseTree();
@@ -97,12 +97,12 @@ public class FORBlockEvaluator {
 			
 			VarValue b5 =expressionEval.eval(node2, vartable, classtable);
 			if(b5 == null) {
-				log("¡¾ERROR¡¿IF½ÚµãÖ´ÐÐcondition½Úµã³ö´í."+block.getForconditionNode().getBlockContent());
+				log("ï¿½ï¿½ERRORï¿½ï¿½IFï¿½Úµï¿½Ö´ï¿½ï¿½conditionï¿½Úµï¿½ï¿½ï¿½ï¿½."+block.getForconditionNode().getBlockContent());
 				return false;				
 			}
 			
-			logger.error("forÌõ¼þ¼ÆËã½á¹û2£º" +b5.getVarsvalue());
-			//Èç¹ûÕâÀïÍü¼ÇÁË¶ÔÅÐ¶ÏÔªËØÖØÐÂ¸³Öµ£¬»áÔì³ÉËÀÑ­»·
+			logger.error("forï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½" +b5.getVarsvalue());
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½Ð¶ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
 			
 			b2 = b5;
 		}

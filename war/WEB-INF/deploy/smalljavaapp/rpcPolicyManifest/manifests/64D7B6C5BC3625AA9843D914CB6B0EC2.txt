@@ -1,0 +1,2 @@
+serviceClass: com.smalljava.client.GreetingService
+path: 1EA89BD8465B9D6107D8A006F7B0518D.gwt.rpc
