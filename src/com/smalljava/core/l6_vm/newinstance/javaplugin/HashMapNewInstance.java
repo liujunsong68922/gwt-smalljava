@@ -1,7 +1,9 @@
 package com.smalljava.core.l6_vm.newinstance.javaplugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.smalljava.core.common.VarValue;
 import com.smalljava.core.l6_vm.newinstance.INewInstance;
 
 public class HashMapNewInstance implements INewInstance {
@@ -12,27 +14,7 @@ public class HashMapNewInstance implements INewInstance {
 	}
 
 	@Override
-	public Object newjavaInstance(String classname) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object newInstance(String classname, ArrayList<VarValue> args) {
+		return new HashMap();
 	}
-
-	@Override
-	public Object newjvmInstance(String classname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object newgwtuiInstance(String classname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object newSmalljavaInstance(String classname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
