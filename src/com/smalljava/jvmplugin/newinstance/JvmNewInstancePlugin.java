@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l6_vm.newinstance.INewInstance;
-import com.smalljava.core.l6_vm.newinstance.NewInstancePluginManager;
+import com.smalljava.core.l4_oopsupport.newinstance.INewInstance;
+import com.smalljava.core.l4_oopsupport.newinstance.NewInstancePluginManager;
 import com.smalljava.jvmplugin.newinstance.impl.awt.AwtButtonNewInstance;
 import com.smalljava.jvmplugin.newinstance.impl.awt.AwtCanvasNewInstance;
 import com.smalljava.jvmplugin.newinstance.impl.awt.AwtCheckBoxGroupNewInstance;

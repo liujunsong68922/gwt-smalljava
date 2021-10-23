@@ -4,8 +4,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
-import com.smalljava.core.l4_block.blockvo.BasicBlock;
-import com.smalljava.core.l4_block.blockvo.childblock.MethodBlock;
+import com.smalljava.core.l2_block.blockvo.BasicBlock;
+import com.smalljava.core.l2_block.blockvo.childblock.MethodBlock;
 
 public class BasicBlockToTreeNode {
 	private Logger logger = LoggerFactory.getLogger(BasicBlockToTreeNode.class);

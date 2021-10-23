@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l6_vm.newinstance.INewInstance;
+import com.smalljava.core.l4_oopsupport.newinstance.INewInstance;
 
 public class SwingJListNewInstance implements INewInstance {
 
