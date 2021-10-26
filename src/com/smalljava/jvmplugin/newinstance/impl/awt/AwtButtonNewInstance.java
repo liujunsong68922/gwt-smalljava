@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l4_oopsupport.newinstance.INewInstance;
+import com.smalljava.core.l6_oopsupport.newinstance.INewInstance;
 
 public class AwtButtonNewInstance implements INewInstance {
 

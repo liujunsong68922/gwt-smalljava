@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l4_oopsupport.newinstance.INewInstance;
+import com.smalljava.core.l6_oopsupport.newinstance.INewInstance;
 
 public class SwingJTextFieldNewInstance implements INewInstance {
 

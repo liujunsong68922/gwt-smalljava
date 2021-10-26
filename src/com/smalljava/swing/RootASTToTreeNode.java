@@ -4,18 +4,22 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
-import com.smalljava.core.l3_expression.vo.RootAST;
-import com.smalljava.core.l3_expression.vo.constvalue.AbstractConstDataElement;
-import com.smalljava.core.l3_expression.vo.obj.ObjectCallOperElement;
-import com.smalljava.core.l3_expression.vo.one.AbstractSingleOperDataOperElement;
-import com.smalljava.core.l3_expression.vo.two.DualOperDataOperElement;
-import com.smalljava.core.l3_expression.vo.var.VarDataElement;
-import com.smalljava.core.l3_expression.vo.var.VarDefineOperElement;
+import com.smalljava.core.l5_expression.vo.RootAST;
+import com.smalljava.core.l5_expression.vo.constvalue.AbstractConstDataElement;
+import com.smalljava.core.l5_expression.vo.obj.ObjectCallOperElement;
+import com.smalljava.core.l5_expression.vo.one.AbstractSingleOperDataOperElement;
+import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
+import com.smalljava.core.l5_expression.vo.var.VarDataElement;
+import com.smalljava.core.l5_expression.vo.var.VarDefineOperElement;
 
 public class RootASTToTreeNode {
 	private Logger logger = LoggerFactory.getLogger(RootASTToTreeNode.class);
 
 	public DefaultMutableTreeNode toTreeNode(RootAST rootast,int ilevel) {
+		logger.info("ilevel:"+ilevel);
+		if(ilevel>100) {
+			return null;
+		}
 		DefaultMutableTreeNode retTreeNode = new DefaultMutableTreeNode("");
 		if (rootast.getChildren() == null) {
 			return retTreeNode;
@@ -89,7 +93,7 @@ public class RootASTToTreeNode {
 			if (child != null) {
 				// String schild = child.getShowString(ilevel + 1);
 				// DefaultMutableTreeNode childnode = child.toTreeNode(ilevel + 1);
-				DefaultMutableTreeNode childnode = this.toTreeNode(rootast, ilevel+1);
+				DefaultMutableTreeNode childnode = this.toTreeNode(child, ilevel+1);
 				
 				retTreeNode.add(childnode);
 			} else {

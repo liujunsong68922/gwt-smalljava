@@ -51,7 +51,7 @@ public class Logger {
 
 	public void debug(String stringcontent) {
 		//debug info is closed on default.
-		//log(stringcontent);
+		log(stringcontent);
 	}
 
 	public void error(String string, Exception e) {

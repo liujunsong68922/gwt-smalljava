@@ -19,12 +19,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l2_block.blockanalyse.BlockAnalyse;
-import com.smalljava.core.l2_block.blockeval.BlockEvaluator;
-import com.smalljava.core.l2_block.blockvo.BasicBlock;
-import com.smalljava.core.l3_expression.analyse.ExpressionASTAnalyse;
-import com.smalljava.core.l3_expression.eval.ExpressionEval;
-import com.smalljava.core.l3_expression.vo.RootAST;
+import com.smalljava.core.l4_block.blockanalyse.BlockAnalyse;
+import com.smalljava.core.l4_block.blockeval.BlockEvaluator;
+import com.smalljava.core.l4_block.blockvo.BasicBlock;
+import com.smalljava.core.l5_expression.analyse.ExpressionASTAnalyse;
+import com.smalljava.core.l5_expression.eval.ExpressionEval;
+import com.smalljava.core.l5_expression.vo.RootAST;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
 import com.smalljava.core.l9_space.vartable.IVarTable;
