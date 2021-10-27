@@ -23,10 +23,10 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 		this.parentVarTable = parentnode;
 		logger.info("init,vartabletypename:"+vartabletypename);		
 		if (parentnode != null) {
-			// ����Ϊ���Ǹ��ڵ�
+			// 
 			this.rootflag = false;
 		} else {
-			// ����Ϊ���ڵ�
+			// 
 			this.rootflag = true;
 		}
 	}
@@ -98,7 +98,7 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	public boolean setVarValue(String varname, VarValue varvalue) {
 		HashMap<String, VarValue> varmap = this.myvarmap;
 		if (varmap == null) {
-			logger.error("���ұ�����ʧ��.");
+			logger.error("[ERROR]varmap is null");
 			return false;
 		}
 		if (varname == null || varname.length() == 0) {
@@ -132,11 +132,11 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	public boolean defineVar(String varname, String vartype) {
 		HashMap<String, VarValue> varmap = this.myvarmap;
 		if (varmap == null) {
-			logger.error("���ұ�����ʧ��.");
+			logger.error("[error] varmap is null");
 			return false;
 		}
 		if (varmap.containsKey(varname)) {
-			logger.error("����������󣬴˴����ظ�����ı�����:" + varname);
+			logger.error("[error] varmap hava contain var:" + varname);
 			return false;
 		}
 		if (vartype == null) {

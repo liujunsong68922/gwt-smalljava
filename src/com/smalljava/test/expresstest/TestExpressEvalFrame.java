@@ -18,12 +18,14 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import com.smalljava.core.analyse.l5_expression.ExpressionASTAnalyse;
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l5_expression.analyse.ExpressionASTAnalyse;
-import com.smalljava.core.l5_expression.eval.ExpressionEval;
-import com.smalljava.core.l5_expression.vo.RootAST;
-import com.smalljava.core.l9_space.classtable.IClassTable;
-import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
+import com.smalljava.core.commonvo.l5_expression.RootAST;
+import com.smalljava.core.eval.l5_expression.ExpressionEval;
+import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
+import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
+//import com.smalljava.core.l9_space.classtable.IClassTable;
+//import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
@@ -162,13 +164,13 @@ class TestMainFrame extends JFrame {
 
 				RootAST root = eanlyse.analyse(stext);
 				if (root == null) {
-					System.out.println("---->ast ʧ��");
+					System.out.println("---->ast failed.");
 					//String s1 = root.getShowString(0);
-					String s2 = "----->ast ʧ��\r\n" ;
+					String s2 = "----->ast failed\r\n" ;
 					TestMainFrame.asttree.setText(s2);
 					return;
 				} else {
-					System.out.println("---->ast �ɹ�");
+					System.out.println("---->ast success.");
 					root.show(0);
 					String s1 = root.getShowString(0);
 					System.out.println(s1);
@@ -203,31 +205,31 @@ class TestMainFrame extends JFrame {
 
 				RootAST root = eanlyse.analyse(stext);
 				if (root == null) {
-					System.out.println("---->ast ʧ��");
+					System.out.println("---->ast failed.");
 					//String s1 = root.getShowString(0);
 					String s2 = "----->ast ʧ��\r\n" ;
 					TestMainFrame.asttree.setText(s2);
 					return;
 				} else {
-					System.out.println("---->ast �ɹ�");
+					System.out.println("---->ast success.");
 
-					//����ִ�й��������м���
-					//��L2����ʼ����������
 					L2_HashMapClassStaticVarTableImpl l2_static = new L2_HashMapClassStaticVarTableImpl("");
 					L2_HashMapClassInstanceVarTableImpl l2_instance = new L2_HashMapClassInstanceVarTableImpl("l2",l2_static);
 					L3_HashMapMethodInstanceVarTableImpl l3 = new L3_HashMapMethodInstanceVarTableImpl("",l2_instance);
 					L4_HashMapBlockVarTableImpl l4 = new L4_HashMapBlockVarTableImpl("",l3);
-					IClassTable classtable = new ClassTableImpl();
 					IVarTable vartable=l4;
-					vartable.defineVar("i","int");
-					vartable.defineVar("map1", "HashMap");
+					//vartable.defineVar("i","int");
+					//vartable.defineVar("map1", "HashMap");
 					
 					ExpressionEval eval = new ExpressionEval();
-					VarValue vv = eval.eval(root, vartable, classtable);
+					VarValue vv = eval.eval(root, vartable,
+							new SmallJavaClassSupportEnv(),
+							new SmallJavaOopSupportEnv());
+					
 					if(vv == null) {
-						System.out.println("���ʽ����ʧ��:vv is null");
+						System.out.println("eval failed:vv is null");
 					}else {
-						System.out.println("������:"+vv.toString());
+						System.out.println("eval ok:"+vv.toString());
 					}
 
 				}

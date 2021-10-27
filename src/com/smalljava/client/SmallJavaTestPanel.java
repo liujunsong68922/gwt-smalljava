@@ -8,10 +8,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.smalljava.core.l4_block.blockanalyse.BlockAnalyse;
-import com.smalljava.core.l4_block.blockeval.BlockEvaluator;
-import com.smalljava.core.l4_block.blockvo.BasicBlock;
-import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
+import com.smalljava.core.analyse.l4_block.BlockAnalyse;
+import com.smalljava.core.commonvo.l4_block.BasicBlock;
+import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
+import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
+//import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
@@ -114,7 +116,7 @@ class SmallJavaTestPanel_VerticalPanel extends VerticalPanel{
 				BlockEvaluator node = new BlockEvaluator();
 				// classtable 目前在GWT里面是一个无效接口，后续考虑去掉
 				// 因为GWT不支持Java类的反射机制，因此必须手工进行调用
-				ClassTableImpl classtable = new ClassTableImpl();
+				//ClassTableImpl classtable = new ClassTableImpl();
 				L2_HashMapClassStaticVarTableImpl vartable1 = new L2_HashMapClassStaticVarTableImpl("");
 				//b1.setVartable(vartable1);
 				L2_HashMapClassInstanceVarTableImpl vartable2 = new L2_HashMapClassInstanceVarTableImpl("",vartable1);
@@ -122,7 +124,7 @@ class SmallJavaTestPanel_VerticalPanel extends VerticalPanel{
 				L4_HashMapBlockVarTableImpl vartable4 = new L4_HashMapBlockVarTableImpl("",vartable3);
 				
 				try {
-					boolean b2 = node.execute(bb,vartable4, classtable);
+					boolean b2 = node.execute(bb,vartable4, new SmallJavaClassSupportEnv(),new SmallJavaOopSupportEnv());
 					Window.alert("计算结果:" + b2);
 				} catch (Exception e) {
 					Window.alert("计算错误:" + e.getMessage());

@@ -18,15 +18,17 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import com.smalljava.core.analyse.l4_block.BlockAnalyse;
+import com.smalljava.core.analyse.l5_expression.ExpressionASTAnalyse;
 import com.smalljava.core.common.VarValue;
-import com.smalljava.core.l4_block.blockanalyse.BlockAnalyse;
-import com.smalljava.core.l4_block.blockeval.BlockEvaluator;
-import com.smalljava.core.l4_block.blockvo.BasicBlock;
-import com.smalljava.core.l5_expression.analyse.ExpressionASTAnalyse;
-import com.smalljava.core.l5_expression.eval.ExpressionEval;
-import com.smalljava.core.l5_expression.vo.RootAST;
-import com.smalljava.core.l9_space.classtable.IClassTable;
-import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
+import com.smalljava.core.commonvo.l4_block.BasicBlock;
+import com.smalljava.core.commonvo.l5_expression.RootAST;
+import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.eval.l5_expression.ExpressionEval;
+import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
+import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
+//import com.smalljava.core.l9_space.classtable.IClassTable;
+//import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
@@ -228,7 +230,7 @@ class TestMainFrame extends JFrame {
 
 					//���ڿ�ʼ����block����������㹤��
 					BlockEvaluator node1 = new BlockEvaluator();
-					ClassTableImpl classtable = new ClassTableImpl();
+					//ClassTableImpl classtable = new ClassTableImpl();
 
 					L2_HashMapClassStaticVarTableImpl vartable1 = new L2_HashMapClassStaticVarTableImpl("");
 					//b1.setVartable(vartable1);
@@ -236,7 +238,7 @@ class TestMainFrame extends JFrame {
 					L3_HashMapMethodInstanceVarTableImpl vartable3 = new L3_HashMapMethodInstanceVarTableImpl("",vartable2);
 					L4_HashMapBlockVarTableImpl vartable4 = new L4_HashMapBlockVarTableImpl("",vartable3);
 					try {
-						boolean b2 = node1.execute(closedblock,vartable4,classtable);
+						boolean b2 = node1.execute(closedblock,vartable4,new SmallJavaClassSupportEnv(),new SmallJavaOopSupportEnv());
 						System.out.println("��������������"+b2);
 						System.out.println("");
 					} catch (Exception e1) {

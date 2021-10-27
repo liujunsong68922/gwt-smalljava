@@ -4,13 +4,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
-import com.smalljava.core.l5_expression.vo.RootAST;
-import com.smalljava.core.l5_expression.vo.constvalue.AbstractConstDataElement;
-import com.smalljava.core.l5_expression.vo.obj.ObjectCallOperElement;
-import com.smalljava.core.l5_expression.vo.one.AbstractSingleOperDataOperElement;
-import com.smalljava.core.l5_expression.vo.two.DualOperDataOperElement;
-import com.smalljava.core.l5_expression.vo.var.VarDataElement;
-import com.smalljava.core.l5_expression.vo.var.VarDefineOperElement;
+import com.smalljava.core.commonvo.l5_expression.RootAST;
+import com.smalljava.core.commonvo.l5_expression.constvalue.AbstractConstDataElement;
+import com.smalljava.core.commonvo.l5_expression.one.AbstractSingleOperDataOperElement;
+import com.smalljava.core.commonvo.l5_expression.oop.ObjectCallOperElement;
+import com.smalljava.core.commonvo.l5_expression.two.DualOperDataOperElement;
+import com.smalljava.core.commonvo.l5_expression.var.VarDataElement;
+import com.smalljava.core.commonvo.l5_expression.var.VarDefineOperElement;
 
 public class RootASTToTreeNode {
 	private Logger logger = LoggerFactory.getLogger(RootASTToTreeNode.class);
