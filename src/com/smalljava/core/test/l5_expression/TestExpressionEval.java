@@ -3,7 +3,7 @@ package com.smalljava.core.test.l5_expression;
 import com.smalljava.core.analyse.l5_expression.ExpressionASTAnalyse;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.commonvo.l5_expression.RootAST;
-import com.smalljava.core.eval.l5_expression.ExpressionEval;
+import com.smalljava.core.eval.l5_expression.SmallJavaExpressionEval;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.IClassTable;
@@ -42,7 +42,7 @@ public class TestExpressionEval {
 		//IClassTable classtable = new ClassTableImpl();
 		IVarTable vartable=l4;
 		vartable.defineVar("i","int");
-		ExpressionEval eval = new ExpressionEval();
+		SmallJavaExpressionEval eval = new SmallJavaExpressionEval();
 		
 		VarValue vv = eval.eval(root, vartable,
 				new SmallJavaClassSupportEnv() ,

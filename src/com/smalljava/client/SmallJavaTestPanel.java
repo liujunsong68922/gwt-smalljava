@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.smalljava.core.analyse.l4_block.BlockAnalyse;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
@@ -24,6 +24,7 @@ import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableI
  * @author liujunsong
  *
  */
+@SuppressWarnings("deprecation")
 public class SmallJavaTestPanel extends FlowPanel {
 	private final String strreadme="这是一个测试用的Panel,用来测试GWT-SmallJava的代码执行功能. ";
 	
@@ -59,6 +60,7 @@ class SmallJavaTestPanel_VerticalPanel extends VerticalPanel{
 		this.add(asttext);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void initButtonPanel() {
 		Button button1 = new Button("text1");
 		Button button2 = new Button("text2");
@@ -113,7 +115,7 @@ class SmallJavaTestPanel_VerticalPanel extends VerticalPanel{
 				BasicBlock bb = testAnalyseByBlock(stext);
 				asttext.setText(bb.getShowString(0));
 
-				BlockEvaluator node = new BlockEvaluator();
+				SmallJavaBlockEvaluator node = new SmallJavaBlockEvaluator();
 				// classtable 目前在GWT里面是一个无效接口，后续考虑去掉
 				// 因为GWT不支持Java类的反射机制，因此必须手工进行调用
 				//ClassTableImpl classtable = new ClassTableImpl();
@@ -181,6 +183,7 @@ class SmallJavaTestPanel_VerticalPanel extends VerticalPanel{
 		BlockAnalyse ba = new BlockAnalyse();
 
 		boolean isok = ba.analyse(closedblock);
+		System.out.println("isok:"+isok);
 		closedblock.show(0);
 		return closedblock;
 	}

@@ -1,15 +1,11 @@
 package com.smalljava.core.l6_supportenv.l6_classsupport;
 
-import java.util.HashMap;
-
 import com.smalljava.core.commonvo.instancevo.JavaClassInstanceVO;
 import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassManager;
 import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassSupportEnv_ClassLoader;
 import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassSupportEnv_NewInstance;
 import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaObjectManager;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
-//import com.smalljava.core.l9_space.classtable.IClassTable;
-import com.smalljava.core.l9_space.vartable.IVarTable;
 
 /**
  * SmallJava 内部Class关键词支持的支持环境

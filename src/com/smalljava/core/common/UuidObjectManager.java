@@ -17,12 +17,12 @@ public class UuidObjectManager {
 		}		
 	}
 	
-	public static void setObject(String uuid,Object obj) {
+	public void setObject(String uuid,Object obj) {
 		initMap();
 		objMap.put(uuid, obj);
 	}
 	
-	public static Object getObject(String uuid) {
+	public Object getObject(String uuid) {
 		initMap();
 		if(objMap.containsKey(uuid)) {
 			return objMap.get(uuid);

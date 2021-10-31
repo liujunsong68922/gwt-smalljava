@@ -9,7 +9,7 @@ import com.smalljava.core.commonvo.instancevo.JavaClassInstanceVO;
 import com.smalljava.core.commonvo.l2_javaclass.SmallJavaClassTemplateVO;
 import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassVarDefineElement;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
@@ -120,7 +120,7 @@ public class SmallJavaClassSupportEnv_NewInstance {
 		}
 		
 		//on success analyse the string input
-		BlockEvaluator node = new BlockEvaluator();
+		SmallJavaBlockEvaluator node = new SmallJavaBlockEvaluator();
 		//ClassTableImpl classtable = new ClassTableImpl();
 		try {
 			boolean b2 = node.execute(closedblock,vartable,classenv,oopenv);

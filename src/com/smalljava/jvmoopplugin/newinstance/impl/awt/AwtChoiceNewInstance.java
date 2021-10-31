@@ -1,11 +1,6 @@
 package com.smalljava.jvmoopplugin.newinstance.impl.awt;
 
-import java.awt.Button;
-import java.awt.Canvas;
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
 import java.awt.Choice;
-import java.awt.Label;
 import java.util.ArrayList;
 
 

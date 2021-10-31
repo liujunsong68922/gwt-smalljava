@@ -11,13 +11,14 @@
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
-  <!-- any one of the following lines.                            -->
+  <!-- any one of the following lines.    -->
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
   <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+  <inherits name='com.google.gwt.xml.XML'/>                          -->
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.smalljava.client.SmalljavaApp'/>
@@ -26,7 +27,7 @@
   <source path='client'/>
   <source path='shared'/>
   <source path='core'/>
-
+  <source path='workflow'/>
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>
 </module>

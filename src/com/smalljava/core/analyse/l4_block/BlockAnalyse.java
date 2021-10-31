@@ -1,5 +1,6 @@
 package com.smalljava.core.analyse.l4_block;
 
+import com.smalljava.core.analyse.l4_block.manager.BlockAnalysePluginManager;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;

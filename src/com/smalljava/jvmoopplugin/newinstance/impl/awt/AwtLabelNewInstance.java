@@ -1,10 +1,7 @@
 package com.smalljava.jvmoopplugin.newinstance.impl.awt;
 
-import java.awt.Button;
 import java.awt.Label;
 import java.util.ArrayList;
-
-
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.newinstance.INewInstance;
 

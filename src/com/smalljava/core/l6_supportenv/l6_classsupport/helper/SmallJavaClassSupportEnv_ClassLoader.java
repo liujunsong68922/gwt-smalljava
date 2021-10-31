@@ -2,8 +2,7 @@ package com.smalljava.core.l6_supportenv.l6_classsupport.helper;
 
 import java.util.ArrayList;
 
-import com.smalljava.core.analyse.l1_analyse.JavaFileAnalyse;
-import com.smalljava.core.analyse.l2_classdefine.SmallJavaClassAnalyse;
+import com.smalljava.core.analyse.l1_analyse.SmallJavaFileAnalyse;
 import com.smalljava.core.analyse.l4_block.BlockAnalyse;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
@@ -13,7 +12,7 @@ import com.smalljava.core.commonvo.l1_javafile.element.JavaFileClassElement;
 import com.smalljava.core.commonvo.l2_javaclass.SmallJavaClassTemplateVO;
 import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassVarDefineElement;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
@@ -108,7 +107,7 @@ public class SmallJavaClassSupportEnv_ClassLoader {
 		}
 		
 		//on success analyse the string input
-		BlockEvaluator node = new BlockEvaluator();
+		SmallJavaBlockEvaluator node = new SmallJavaBlockEvaluator();
 		//ClassTableImpl classtable = new ClassTableImpl();
 		try {
 			boolean b2 = node.execute(closedblock,vartable,classenv,oopenv);
@@ -125,7 +124,7 @@ public class SmallJavaClassSupportEnv_ClassLoader {
 			SmallJavaClassSupportEnv classenv,
 			SmallJavaOopSupportEnv oopenv) {
 		//step1: convert classDefineString to ClassTemplateVO
-		JavaFileAnalyse javaclassanalyse = new JavaFileAnalyse();
+		SmallJavaFileAnalyse javaclassanalyse = new SmallJavaFileAnalyse();
 		 JavaFileRootVO vo = javaclassanalyse.analyse(strClassdefine);
 		if(vo == null) {
 			logger.info("[ERROR] javafileanalyse failed.");

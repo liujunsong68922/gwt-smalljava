@@ -1,7 +1,5 @@
 package com.smalljava.core.l6_supportenv.l6_oopsupport;
 
-import java.util.HashMap;
-
 import com.smalljava.core.l6_supportenv.l6_oopsupport.newinstance.NewInstancePluginManager;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.objectcall.ObjectCallPluginManager;
 

@@ -1,6 +1,5 @@
 package com.smalljava.test.expresstest;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
@@ -10,18 +9,16 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 import com.smalljava.core.analyse.l5_expression.ExpressionASTAnalyse;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.commonvo.l5_expression.RootAST;
-import com.smalljava.core.eval.l5_expression.ExpressionEval;
+import com.smalljava.core.eval.l5_expression.SmallJavaExpressionEval;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.IClassTable;
@@ -40,6 +37,7 @@ public class TestExpressEvalFrame {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void main(String args[]) {
 		System.out.println("enter TestExpressEvalFrame");
 
@@ -221,7 +219,7 @@ class TestMainFrame extends JFrame {
 					//vartable.defineVar("i","int");
 					//vartable.defineVar("map1", "HashMap");
 					
-					ExpressionEval eval = new ExpressionEval();
+					SmallJavaExpressionEval eval = new SmallJavaExpressionEval();
 					VarValue vv = eval.eval(root, vartable,
 							new SmallJavaClassSupportEnv(),
 							new SmallJavaOopSupportEnv());

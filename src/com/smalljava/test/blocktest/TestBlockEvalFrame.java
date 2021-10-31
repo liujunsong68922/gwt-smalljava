@@ -1,6 +1,5 @@
 package com.smalljava.test.blocktest;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
@@ -10,26 +9,17 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 import com.smalljava.core.analyse.l4_block.BlockAnalyse;
-import com.smalljava.core.analyse.l5_expression.ExpressionASTAnalyse;
-import com.smalljava.core.common.VarValue;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.commonvo.l5_expression.RootAST;
-import com.smalljava.core.eval.l4_block.BlockEvaluator;
-import com.smalljava.core.eval.l5_expression.ExpressionEval;
+import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
-//import com.smalljava.core.l9_space.classtable.IClassTable;
-//import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
-import com.smalljava.core.l9_space.vartable.IVarTable;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
@@ -44,6 +34,7 @@ public class TestBlockEvalFrame {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void main(String args[]) {
 		System.out.println("enter TestExpressEvalFrame");
 
@@ -229,7 +220,7 @@ class TestMainFrame extends JFrame {
 					System.out.println("create tree ok.");
 
 					//���ڿ�ʼ����block����������㹤��
-					BlockEvaluator node1 = new BlockEvaluator();
+					SmallJavaBlockEvaluator node1 = new SmallJavaBlockEvaluator();
 					//ClassTableImpl classtable = new ClassTableImpl();
 
 					L2_HashMapClassStaticVarTableImpl vartable1 = new L2_HashMapClassStaticVarTableImpl("");

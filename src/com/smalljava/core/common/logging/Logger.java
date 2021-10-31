@@ -62,6 +62,6 @@ public class Logger {
 	
 	public native void consoleLog(String message) /*-{
 	//alert(message);
-	console.log( "[ExpressionEval]:" + message );
+	console.log( "[Logger]:" + message );
 	}-*/;
 }

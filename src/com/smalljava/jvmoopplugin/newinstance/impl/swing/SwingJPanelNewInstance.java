@@ -1,8 +1,6 @@
 package com.smalljava.jvmoopplugin.newinstance.impl.swing;
 
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.smalljava.core.common.VarValue;

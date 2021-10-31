@@ -1,10 +1,7 @@
 package com.smalljava.jvmoopplugin.newinstance.impl.swing;
 
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
-
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.newinstance.INewInstance;
 

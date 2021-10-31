@@ -2,7 +2,7 @@ package com.smalljava.core.test.l4_block;
 
 import com.smalljava.core.analyse.l4_block.BlockAnalyse;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.eval.l4_block.BlockEvaluator;
+import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 //import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
@@ -18,7 +18,7 @@ public class TestBlockEvalutor {
 		
 		BasicBlock b1 = testAnalyseByBlock();
 		b1.show(0);
-		BlockEvaluator node = new BlockEvaluator();
+		SmallJavaBlockEvaluator node = new SmallJavaBlockEvaluator();
 		//ClassTableImpl classtable = new ClassTableImpl();
 
 		L2_HashMapClassStaticVarTableImpl vartable1 = new L2_HashMapClassStaticVarTableImpl("");

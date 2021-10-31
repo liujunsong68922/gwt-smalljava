@@ -1,9 +1,7 @@
 package com.smalljava.jvmoopplugin.newinstance;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.smalljava.core.common.VarValue;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.newinstance.INewInstance;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.newinstance.NewInstancePluginManager;
 import com.smalljava.jvmoopplugin.newinstance.impl.awt.AwtButtonNewInstance;

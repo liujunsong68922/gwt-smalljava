@@ -2,8 +2,8 @@ package com.smalljava.core.analyse.l2_classdefine;
 
 import java.util.ArrayList;
 
-import com.smalljava.core.analyse.l2_classdefine.plugin.ISmallJavaClassAnalysePlugin;
-import com.smalljava.core.analyse.l2_classdefine.plugin.SmallJavaClassAnalysePluginManager;
+import com.smalljava.core.analyse.l2_classdefine.manager.ISmallJavaClassAnalysePlugin;
+import com.smalljava.core.analyse.l2_classdefine.manager.SmallJavaClassAnalysePluginManager;
 import com.smalljava.core.analyse.l3_method.SmallJavaMethodAnalyse;
 import com.smalljava.core.common.StringFindUtil;
 import com.smalljava.core.common.logging.Logger;

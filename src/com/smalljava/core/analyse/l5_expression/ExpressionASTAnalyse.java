@@ -1,5 +1,7 @@
 package com.smalljava.core.analyse.l5_expression;
 
+import com.smalljava.core.analyse.l5_expression.manager.ExpressionASTPluginManager;
+import com.smalljava.core.analyse.l5_expression.manager.IAstPlugin;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.commonvo.l5_expression.AbstractLeafElement;
@@ -10,7 +12,7 @@ public class ExpressionASTAnalyse {
 	private static Logger logger = LoggerFactory.getLogger(ExpressionASTAnalyse.class);
 	
 	@SuppressWarnings("static-access")
-	public static RootAST analyse(String strexpresion) {
+	public RootAST analyse(String strexpresion) {
 		ExpressionASTPluginManager manager = new ExpressionASTPluginManager();
 		RootAST root = null;
 		for(IAstPlugin plugin: manager.getPluginmap()) {
@@ -31,7 +33,8 @@ public class ExpressionASTAnalyse {
 					continue;
 				}
 				if(child.getClass().getName().equals(MiddleAST.class.getName())) {
-					RootAST newchild = ExpressionASTAnalyse.analyse(child.getStrexpression());
+					ExpressionASTAnalyse childanalyse = new ExpressionASTAnalyse();
+					RootAST newchild = childanalyse.analyse(child.getStrexpression());
 					if(newchild==null) {
 						logger.error("[error] middleast analyse failed."+child.getStrexpression()+"��");
 						return null;

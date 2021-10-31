@@ -24,7 +24,8 @@ public class RootAST extends AbstractAST {
 	private String uuid;
 
 	public RootAST() {
-		this.uuid = UUIDFunction.uuid();
+		UUIDFunction uuidfunction = new UUIDFunction();
+		this.uuid = uuidfunction.uuid();
 	}
 
 	public String getStrexpression() {

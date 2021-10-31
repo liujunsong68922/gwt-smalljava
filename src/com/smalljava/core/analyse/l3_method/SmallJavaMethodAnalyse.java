@@ -9,100 +9,102 @@ import com.smalljava.core.commonvo.l3_javamethod.SmallJavaMethodRootVO;
 
 /**
  * JavaMethodAnalyse
+ * 
  * @author liujunsong
  *
  */
 public class SmallJavaMethodAnalyse {
 	private Logger logger = LoggerFactory.getLogger(SmallJavaMethodAnalyse.class);
+
 	/**
 	 * 将一个方法的定义字符串解析成名称，参数，内容三部分
+	 * 
 	 * @param strcontent
 	 * @return
 	 */
 	public SmallJavaMethodRootVO analyse(SmallJavaClassMethodElement methodelement) {
-		if(methodelement==null ) {
+		if (methodelement == null) {
 			logger.info("[ERROR]methodelement is null.");
 			return null;
 		}
 
 		String strcontent = methodelement.getStringcontent();
-		if(strcontent == null) {
+		if (strcontent == null) {
 			logger.error("[ERROR]strcontent is null.");
-			return null;			
-		}else {
-			logger.debug("method content:"+strcontent);
+			return null;
+		} else {
+			logger.debug("method content:" + strcontent);
 		}
-		
+
 		StringFindUtil util = new StringFindUtil();
 		strcontent = util.trimReturnAndSpace(strcontent);
-		if(strcontent.equals("")) {
+		if (strcontent.equals("")) {
 			logger.error("[ERROR] strcontent is emtyp.");
-			return null;			
+			return null;
 		}
-		
-		if(! strcontent.endsWith("}")) {
+
+		if (!strcontent.endsWith("}")) {
 			logger.error("[ERROR]strcontent is not ended by [ } ].");
-			return null;			
-			
+			return null;
+
 		}
-		
+
 		SmallJavaMethodRootVO rootvo = new SmallJavaMethodRootVO();
-		//TODO:从其中抽取方法名，变量参数，方法名定义
+		// TODO:从其中抽取方法名，变量参数，方法名定义
 		int ipos1 = util.findfirstStringForBlock(strcontent, "{");
-		if(ipos1<0) {
+		if (ipos1 < 0) {
 			logger.error("[ERROR]strcontent cannot find {.");
 			return null;
 		}
-		
-		//设置Method对象的字符串内容
+
+		// 设置Method对象的字符串内容
 		String methodcontent = strcontent.substring(ipos1);
 		rootvo.setMethodContent(methodcontent);
-		
-		
+
 		int ipos2 = strcontent.indexOf("(");
 		int ipos3 = strcontent.indexOf(")");
-		if(ipos2<0 || ipos3<0) {
-			logger.error("【ERROR】strcontent 查找()失败！"+strcontent);
+		if (ipos2 < 0 || ipos3 < 0) {
+			logger.error("【ERROR】strcontent 查找()失败！" + strcontent);
 			return null;
 		}
-		if(ipos2>ipos3) {
+		if (ipos2 > ipos3) {
 			logger.error("【ERROR】strcontent ipos2>ipos3");
 			return null;
-			
+
 		}
-		
-		String argdefine = strcontent.substring(ipos2+1,ipos3);
+
+		String argdefine = strcontent.substring(ipos2 + 1, ipos3);
 		String args[] = argdefine.split(",");
-		for(String arg:args) {
-			//按照空格来分解arg
+		for (String arg : args) {
+			// 按照空格来分解arg
 			arg = arg.trim();
-			if(arg.length()==0) {
-				//空字符串跳过循环
+			if (arg.length() == 0) {
+				// 空字符串跳过循环
 				continue;
 			}
 			String argvalue[] = arg.split(" ");
-			if(argvalue.length !=2) {
-				logger.error("【ERROR】Method arg analyse error:"+arg);
+			if (argvalue.length != 2) {
+				logger.error("【ERROR】Method arg analyse error:" + arg);
 				return null;
-			}else {
+			} else {
 				SmallJavaMethodArgumentVO argvo = new SmallJavaMethodArgumentVO();
 				argvo.setArgtype(argvalue[0]);
 				argvo.setArgname(argvalue[1]);
 				rootvo.getArgArray().add(argvo);
 			}
 		}
-		
-		String leftdata = strcontent.substring(0,ipos2);
+
+		String leftdata = strcontent.substring(0, ipos2);
 		leftdata = util.trimReturnAndSpace(leftdata);
 		String sdata[] = leftdata.split(" ");
-		//最后一个字符串是方法名
-		if(sdata.length>0) {
-			rootvo.setMethodname(sdata[sdata.length-1]);
-		}else {
-			logger.error("【ERROR】 leftdata is empty."+leftdata);
+		// 最后一个字符串是方法名
+		if (sdata.length > 0) {
+			rootvo.setMethodname(sdata[sdata.length - 1]);
+		} else {
+			logger.error("【ERROR】 leftdata is empty." + leftdata);
 			return null;
 		}
-		
+
 		return rootvo;
 	}
 }
