@@ -15,7 +15,9 @@ import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
 /**
- * import 表达式的处理插件
+ * import 表达式的处理插件，
+ * import 表达式作用于当前变量表Vartable上
+ * import 表达式作用于当前变量表中的classtablename上，默认为"SYSTEM_CLASSTABLE"
  * @author liujunsong
  *
  */
@@ -40,6 +42,8 @@ public class ImportExpressionPlugin implements ISmallJavaExpressionEval {
 			UuidObjectManager uuidobjmanager = new UuidObjectManager();
 			//import语句执行以后，要在执行环境中设置一个class映射的mapping
 			//这个mapping现在设计挂载在变量表上
+			//这里存在一个如何解决不同作用域的重名问题
+			//这一问题下一步需要考虑得到解决
 			if (! vartable.isValid(classtablename)) {
 				vartable.defineVar(this.classtablename, "HashMap");
 				HashMap<String,String> map1 = new HashMap<String,String>();
@@ -59,14 +63,15 @@ public class ImportExpressionPlugin implements ISmallJavaExpressionEval {
 			}else {
 				String uuid = varvalue2.getVarsvalue();
 				Object obj2 = uuidobjmanager.getObject(uuid);
-				HashMap<String,String> map2 = (HashMap<String,String>) obj2;
-				if(! map2.containsKey(classname)) {
-					String shortname = this.getShortName(classname);
-					if(shortname.length()>0) {
-						map2.put(classname, shortname);
-						map2.put(shortname, classname);
+				HashMap<String,String> classnamemap = (HashMap<String,String>) obj2;
+				String shortclassname = this.getShortName(classname);
+				
+				if(! classnamemap.containsKey(shortclassname)) {
+						classnamemap.put(shortclassname, classname);
 						logger.info("[info] classname set ok.");
-					}
+				}else {
+					logger.info("[info] import statement not execute.classname has been registered."
+							+shortclassname);
 				}
 			}
 			//return a new VarValue,means execute ok.
@@ -76,7 +81,11 @@ public class ImportExpressionPlugin implements ISmallJavaExpressionEval {
 	}
 
 	private String getShortName(String classname) {
-		
-		return "";
+		String sname[] = classname.split(".");
+		if(sname.length>0) {
+			return sname[sname.length-1];
+		}else {
+			return "";
+		}
 	}
 }

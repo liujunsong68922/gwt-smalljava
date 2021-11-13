@@ -2,7 +2,7 @@ package com.smalljava.core.commonvo.l5_expression.oop;
 
 import com.smalljava.core.commonvo.l5_expression.AbstractOperElement;
 
-public class ObjectPropertyElement extends AbstractOperElement {
+public class ObjectPropertyGetElement extends AbstractOperElement {
 	private String opercode=".";
 	private String objname;
 	private String propertyname;

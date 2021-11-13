@@ -6,6 +6,7 @@ import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassMethodElement;
 import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassVarDefineElement;
+import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
 
 /**
   * JavaClassTemplateRootVO 是对Java文件内部对class关键定义部分的抽象表示
@@ -13,9 +14,12 @@ import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassVarDefineE
  *
  */
 public class SmallJavaClassTemplateVO {
+	//定义logger对象
 	private Logger logger = LoggerFactory.getLogger(SmallJavaClassTemplateVO.class);
+	//定义class的static 变量表
+	private L2_HashMapClassStaticVarTableImpl staticvartable = new L2_HashMapClassStaticVarTableImpl("");
 	/**
-	 *  Java类包的名称（暂不实现，为未来进行预留）
+	 *  Java类包的名称
 	 */
 	private String packagename;
 
@@ -51,6 +55,16 @@ public class SmallJavaClassTemplateVO {
 
 	public void setChildren(ArrayList<AbstractSmallJavaClassElement> children) {
 		this.children = children;
+	}
+
+	
+
+	public L2_HashMapClassStaticVarTableImpl getStaticvartable() {
+		return staticvartable;
+	}
+
+	public void setStaticvartable(L2_HashMapClassStaticVarTableImpl staticvartable) {
+		this.staticvartable = staticvartable;
 	}
 
 	/**

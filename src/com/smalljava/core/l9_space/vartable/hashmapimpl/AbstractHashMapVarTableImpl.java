@@ -163,7 +163,7 @@ public abstract class AbstractHashMapVarTableImpl implements IVarTable {
 	}
 
 	/**
-	 * MEMO:�ж��Ƿ�����Ч����
+	 * MEMO:check is valid varname
 	 */
 	@Override
 	public boolean isValid(String varname) {

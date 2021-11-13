@@ -133,7 +133,6 @@ public abstract class AbstractWorkflowVO {
 	 * @return
 	 */
 	public String toXMLString() {
-		String sret="";
 		String shead="";
 		String sbody="";
 		String sfooter="";

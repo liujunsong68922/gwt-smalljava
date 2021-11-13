@@ -33,128 +33,111 @@ public class SmallJavaClassSupportEnv_ClassLoader {
 	 * 
 	 * @return
 	 */
-	public boolean loadClassTemplateVO(SmallJavaClassManager classmanager,
-				SmallJavaClassTemplateVO classtemplatevo,
-				SmallJavaClassSupportEnv classenv,
-				SmallJavaOopSupportEnv oopenv) {
+	public boolean loadClassTemplateVO(SmallJavaClassTemplateVO classtemplatevo, SmallJavaClassSupportEnv classenv,
+			SmallJavaOopSupportEnv oopenv) {
 		// step1:check argment.
-		if (classmanager == null) {
-			logger.error("[error] classmanager is null.");
-			//MEMO：加载失败
-			return false;
-		}
-
 		if (classtemplatevo == null) {
 			logger.error("[error] classtemplatevo is null.");
-			//MEMO:加载失败
+			// MEMO:加载失败
 			return false;
 		}
 
 		// step2.register classtemplatevo to classmanger.
 		String classname = classtemplatevo.getClassname();
-		classmanager.getClassdefinemap().put(classname, classtemplatevo);
-		
-		//step3. After load class, define class static vartable.
+		classenv.getClassdefinemap().put(classname, classtemplatevo);
+
+		// step3. After load class, define class static vartable.
 		// but this function only work once.
 		// MEMO： 每个Class都定义一个自己的静态变量的变量表，并在变量表里面定义静态变量
-		L2_HashMapClassStaticVarTableImpl vartable =
-				new L2_HashMapClassStaticVarTableImpl("classstatic");
-		if(classmanager.getClassStaticVartableMap().containsKey(classname)) {
-			logger.info("[info]This class has been loaded."+classname);
-		}else {
-			logger.info("[info]This class has not been loaded."+classname);
-			
-			//MEMO:针对Class级别，也就是static级别的静态变量定义
-			classmanager.getClassStaticVartableMap().put(classname, vartable);
-			
-			//MEMO:仅仅定义一个变量表是不够的，现在需要在变量表上定义static变量定义
-			//MEMO:这里需要对原来的代码进行整理，再定义static变量
-			ArrayList<SmallJavaClassVarDefineElement> vardefinelist = classtemplatevo.getPropertiesArray();
-			for(SmallJavaClassVarDefineElement vardefine: vardefinelist) {
-				String strcontent = vardefine.getStringcontent();
-				//logger output for debug.
-				logger.debug("[loadClassTemplateVO]vardefine:"+strcontent);
-				
-				//MEMO: execute this {strcontent} on {varTable} that creat upside.
-				//process only static var define.
-				if(strcontent.indexOf("static ") >= 0) {
-					this.executeStatementOnVarTable(strcontent, vartable,classenv,oopenv);
-				}else {
-					//this is not static variable, 
-					//igore it.
-				}
+		// L2_HashMapClassStaticVarTableImpl vartable =
+		new L2_HashMapClassStaticVarTableImpl("classstatic");
+		L2_HashMapClassStaticVarTableImpl vartable = (L2_HashMapClassStaticVarTableImpl) classtemplatevo
+				.getStaticvartable();
+		new L2_HashMapClassStaticVarTableImpl("classstatic");
+
+		// MEMO:仅仅定义一个变量表是不够的，现在需要在变量表上定义static变量定义
+		// MEMO:这里需要对原来的代码进行整理，再定义static变量
+		ArrayList<SmallJavaClassVarDefineElement> vardefinelist = classtemplatevo.getPropertiesArray();
+		for (SmallJavaClassVarDefineElement vardefine : vardefinelist) {
+			String strcontent = vardefine.getStringcontent();
+			// logger output for debug.
+			logger.debug("[loadClassTemplateVO]vardefine:" + strcontent);
+
+			// MEMO: execute this {strcontent} on {varTable} that creat upside.
+			// process only static var define.
+			if (strcontent.indexOf("static ") >= 0) {
+				this.executeStatementOnVarTable(strcontent, vartable, classenv, oopenv);
+			} else {
+				// this is not static variable,
+				// igore it.
 			}
 		}
 		return true;
 	}
+
 	/**
-	 * This function only execute var define statement.
-	 * This function will call block evaluate function.
+	 * This function only execute var define statement. This function will call
+	 * block evaluate function.
+	 * 
 	 * @param strcontent
 	 * @param vartable
 	 * @return
 	 */
-	private boolean executeStatementOnVarTable(String strcontent,
-			L2_HashMapClassStaticVarTableImpl vartable,
-			SmallJavaClassSupportEnv classenv,
-			SmallJavaOopSupportEnv oopenv) {
-		BasicBlock closedblock = new BasicBlock("",strcontent,null);
+	private boolean executeStatementOnVarTable(String strcontent, L2_HashMapClassStaticVarTableImpl vartable,
+			SmallJavaClassSupportEnv classenv, SmallJavaOopSupportEnv oopenv) {
+		BasicBlock closedblock = new BasicBlock("", strcontent, null);
 		BlockAnalyse ba = new BlockAnalyse();
 		boolean isok = ba.analyse(closedblock);
-		if(! isok) {
-			logger.error("[ERROR]error at analyse block:"+strcontent);
+		if (!isok) {
+			logger.error("[ERROR]error at analyse block:" + strcontent);
 			return false;
 		}
-		
-		//on success analyse the string input
+
+		// on success analyse the string input
 		SmallJavaBlockEvaluator node = new SmallJavaBlockEvaluator();
-		//ClassTableImpl classtable = new ClassTableImpl();
+		// ClassTableImpl classtable = new ClassTableImpl();
 		try {
-			boolean b2 = node.execute(closedblock,vartable,classenv,oopenv);
+			boolean b2 = node.execute(closedblock, vartable, classenv, oopenv);
 			return b2;
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("[ERROR]error on execute. "+strcontent);
+			logger.error("[ERROR]error on execute. " + strcontent);
 			return false;
 		}
 	}
-	
-	public boolean loadClassDefineString(SmallJavaClassManager classmanager,
-			String strClassdefine,
-			SmallJavaClassSupportEnv classenv,
+
+	public boolean loadClassDefineString(String strClassdefine, SmallJavaClassSupportEnv classenv,
 			SmallJavaOopSupportEnv oopenv) {
-		//step1: convert classDefineString to ClassTemplateVO
+		// step1: convert classDefineString to ClassTemplateVO
 		SmallJavaFileAnalyse javaclassanalyse = new SmallJavaFileAnalyse();
-		 JavaFileRootVO vo = javaclassanalyse.analyse(strClassdefine);
-		if(vo == null) {
+		JavaFileRootVO vo = javaclassanalyse.analyse(strClassdefine);
+		if (vo == null) {
 			logger.info("[ERROR] javafileanalyse failed.");
 			return false;
-		}else {
+		} else {
 			ArrayList<AbstractJavaFileElement> children = vo.getChildren();
-			for(AbstractJavaFileElement child:children) {
+			for (AbstractJavaFileElement child : children) {
 				if (child instanceof JavaFileClassElement) {
-					//类型转换
+					// 类型转换
 					JavaFileClassElement classelement = (JavaFileClassElement) child;
-					if(classelement.getClasstemplatevo() == null) {
+					if (classelement.getClasstemplatevo() == null) {
 						logger.error("[ERROR] Classtemplatevo is null.");
 						return false;
-					}else {
-						boolean b1 = this.loadClassTemplateVO(classmanager, classelement.getClasstemplatevo(),classenv,oopenv);
-						if(! b1) {
+					} else {
+						boolean b1 = this.loadClassTemplateVO(classelement.getClasstemplatevo(), classenv, oopenv);
+						if (!b1) {
 							logger.error("[ERROR] error at loadClassTemplateVO.");
 							return false;
-						}else {
-							//继续循环
+						} else {
+							// 继续循环
 							continue;
 						}
 					}
 				}
-				
+
 			}
 			return true;
 		}
 	}
-	
-}
-	
 
+}

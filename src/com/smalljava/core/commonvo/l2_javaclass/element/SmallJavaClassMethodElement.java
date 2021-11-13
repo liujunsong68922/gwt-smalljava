@@ -9,6 +9,7 @@ import com.smalljava.core.commonvo.l3_javamethod.SmallJavaMethodRootVO;
  *
  */
 public class SmallJavaClassMethodElement extends AbstractSmallJavaClassElement {
+	//在JavaClassMethodElement里面定义一个MethodRootVO
 	private SmallJavaMethodRootVO methodvo = null;
 
 	public SmallJavaMethodRootVO getMethodvo() {

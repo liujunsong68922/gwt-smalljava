@@ -26,7 +26,7 @@ import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableI
  */
 @SuppressWarnings("deprecation")
 public class SmallJavaTestPanel extends FlowPanel {
-	private final String strreadme="这是一个测试用的Panel,用来测试GWT-SmallJava的代码执行功能. ";
+	//private final String strreadme="这是一个测试用的Panel,用来测试GWT-SmallJava的代码执行功能. ";
 	
 	private SmallJavaTestPanel_VerticalPanel vpanel= new SmallJavaTestPanel_VerticalPanel();
 	/**

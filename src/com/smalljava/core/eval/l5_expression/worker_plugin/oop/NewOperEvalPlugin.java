@@ -7,7 +7,6 @@ import com.smalljava.core.common.UuidObjectManager;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
-import com.smalljava.core.commonvo.instancevo.JavaClassInstanceVO;
 import com.smalljava.core.commonvo.l5_expression.RootAST;
 import com.smalljava.core.commonvo.l5_expression.oop.NewOperElement;
 import com.smalljava.core.eval.l5_expression.ISmallJavaExpressionEval;
@@ -48,16 +47,17 @@ public class NewOperEvalPlugin implements ISmallJavaExpressionEval {
 			
 			//if this classname is register by classenv
 			//then using classenv to create it.
-			if(classenv.getClassmanager().getClassdefinemap().containsKey(classname)) {
+			if(classenv.getClassdefinemap().containsKey(classname)) {
 				//调用接口，创建对象
-				JavaClassInstanceVO vo = classenv.newInstance(classname);
-				String uuid = this.uuid();
-				UuidObjectManager uuidmanager = new UuidObjectManager();
-				uuidmanager.setObject(uuid, vo);
-				VarValue vvalue1 = new VarValue();
-				vvalue1.setVartype(classname);
-				vvalue1.setVarsvalue(uuid);
-				return vvalue1;
+				//VarValue vo = classenv.newInstance(classname,classenv,oopenv);
+				VarValue vo = null;
+				//String uuid = this.uuid();
+				//UuidObjectManager uuidmanager = new UuidObjectManager();
+				//uuidmanager.setObject(uuid, vo);
+				//VarValue vvalue1 = new VarValue();
+				//vvalue1.setVartype(classname);
+				//vvalue1.setVarsvalue(uuid);
+				return vo;
 			}
 			
 			//in other condition,using OopPluginmanager

@@ -1,10 +1,13 @@
 package com.smalljava.core.l6_supportenv.l6_classsupport;
 
-import com.smalljava.core.commonvo.instancevo.JavaClassInstanceVO;
-import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassManager;
+import java.util.HashMap;
+
+import com.smalljava.core.common.logging.Logger;
+import com.smalljava.core.common.logging.LoggerFactory;
+import com.smalljava.core.commonvo.l2_javaclass.SmallJavaClassTemplateVO;
+import com.smalljava.core.l6_supportenv.IClassObject;
+import com.smalljava.core.l6_supportenv.ISupportEnv;
 import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassSupportEnv_ClassLoader;
-import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaClassSupportEnv_NewInstance;
-import com.smalljava.core.l6_supportenv.l6_classsupport.helper.SmallJavaObjectManager;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
 
 /**
@@ -14,28 +17,40 @@ import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
  * @author liujunsong
  *
  */
-public class SmallJavaClassSupportEnv {
-	private SmallJavaClassManager classmanager = new SmallJavaClassManager();
-	private SmallJavaObjectManager objcetmanager = new SmallJavaObjectManager();
+public class SmallJavaClassSupportEnv implements ISupportEnv {
+	private Logger logger = LoggerFactory.getLogger(SmallJavaClassSupportEnv.class);
 	
+	/**
+	 * MEMO：这是所有使用字符串格式加载的SmallJava的内部类定义
+	 */
+	private HashMap<String,SmallJavaClassTemplateVO> classdefinemap = 
+			new HashMap<String,SmallJavaClassTemplateVO>();
+	/**
+	 * MEMO：这是所有使用字符串加载以后的ClassImpl转换类的定义
+	 * MEMO:SmallJavaClassImpl从SmallJavaClassTemplateVO中转换得到
+	 */
+	private HashMap<String,SmallJavaIClassImpl> classmap = new HashMap<String,SmallJavaIClassImpl>();
+	
+//	private HashMap<String,IVarTable> classStaticVartableMap 
+//	= new HashMap<String,IVarTable>();
+	
+	public HashMap<String, SmallJavaClassTemplateVO> getClassdefinemap() {
+		return classdefinemap;
+	}
 
-	
+	public void setClassdefinemap(HashMap<String, SmallJavaClassTemplateVO> classdefinemap) {
+		this.classdefinemap = classdefinemap;
+	}
+
 	//get method
-	public SmallJavaClassManager getClassmanager() {
-		return classmanager;
-	}
+//	public HashMap<String, IVarTable> getClassStaticVartableMap() {
+//		return classStaticVartableMap;
+//	}
+
 	//set method
-	public void setClassmanager(SmallJavaClassManager classmanager) {
-		this.classmanager = classmanager;
-	}
-	//get method
-	public SmallJavaObjectManager getObjcetmanager() {
-		return objcetmanager;
-	}
-	//set method
-	public void setObjcetmanager(SmallJavaObjectManager objcetmanager) {
-		this.objcetmanager = objcetmanager;
-	}
+//	public void setClassStaticVartableMap(HashMap<String, IVarTable> classStaticVartableMap) {
+//		this.classStaticVartableMap = classStaticVartableMap;
+//	}	
 	
 	/**
 	 * SmallJava 类支持环境，加载一个字符串格式的Class定义
@@ -47,24 +62,27 @@ public class SmallJavaClassSupportEnv {
 	public boolean loadClassDefineString(String strClassDefine) {
 		SmallJavaClassSupportEnv_ClassLoader classloader = 
 				new SmallJavaClassSupportEnv_ClassLoader();
-		return classloader.loadClassDefineString(this.getClassmanager(), strClassDefine,this,new SmallJavaOopSupportEnv());
+		return classloader.loadClassDefineString( strClassDefine,this,new SmallJavaOopSupportEnv());
 	}
 	
-	/**
-	 * newInstance support function.
-	 * create a new SmallJava ClassInstaneVO by classname.
-	 * MEMO: 注意SmallJava的Class部分支持，只负责生成类的实例，并不提供支持运行功能
-	 * MEMO: SmallJava的类和对象实例仅仅是提供源代码层次的存储分解，不直接提供运行功能
-	 * @param classname
-	 * @return
-	 */
-	public JavaClassInstanceVO newInstance(String classname) {
-		SmallJavaClassSupportEnv_NewInstance newinstance =
-				new SmallJavaClassSupportEnv_NewInstance();
-		JavaClassInstanceVO instancevo = newinstance.newInstance(this, classname,new SmallJavaOopSupportEnv());
-		if(instancevo !=null) {
-			this.getObjcetmanager().getVolist().add(instancevo);
-		}
-		return instancevo;
+	@Override
+	public boolean loadClassDefine(String fullname, SmallJavaClassSupportEnv classenv,
+			SmallJavaOopSupportEnv oopenv) {
+		
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean loadClassDefine(IClassObject classimpl, SmallJavaClassSupportEnv classenv,
+			SmallJavaOopSupportEnv oopenv) {
+		//[ERROR] This function is not support by ClassSupportEnv
+		logger.error("[ERROR] unsupported loadClassDefine.");
+		return false;
+	}
+	
+	@Override
+	public IClassObject getIClassByName(String fullname) {
+		IClassObject classimpl = this.classmap.get(fullname);
+		return classimpl;
 	}
 }

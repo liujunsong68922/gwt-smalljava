@@ -40,12 +40,12 @@ public class SmallJavaClassSupportEnv_NewInstance {
 			return null;
 		}
 		//step1: from env,retrieve class definevo
-		SmallJavaClassTemplateVO classvo = classenv.getClassmanager().getClassdefinemap().get(classname);
+		SmallJavaClassTemplateVO classvo = classenv.getClassdefinemap().get(classname);
 		if(classvo == null) {
 			logger.error("[ERROR] classvo is null.");
 			return null;
 		}
-		IVarTable staticvartable = classenv.getClassmanager().getClassStaticVartableMap().get(classname);
+		IVarTable staticvartable = classvo.getStaticvartable();
 		if(staticvartable == null) {
 			logger.error("[ERROR] class static vartable is null.");
 			return null;
@@ -55,20 +55,14 @@ public class SmallJavaClassSupportEnv_NewInstance {
 			parentVartable = (L2_HashMapClassStaticVarTableImpl) staticvartable;
 		}else {
 			logger.error("[ERROR] [Type mismatch]staticvartable is not L2_HashMapClassStaticVarTableImpl.");
+			return null;
 		}
 		
 		//step2.define return objectinstance vo.
 		JavaClassInstanceVO instanceVO = new JavaClassInstanceVO();
-		//copy packagename
-		instanceVO.setPackagename(classvo.getPackagename());
-		//copy classname
-		instanceVO.setClassname(classvo.getClassname());
 		
-		//copy child elements.
-		//This elements is generate at class analyse time
-		//and this element will never changed at runtime
-		//so that we can directily copy it from class to object.
-		instanceVO.setChildren(classvo.getChildren());
+		instanceVO.setClasstemplatevo(classvo);
+		
 		
 		//create a new Vartable for object instance.
 		L2_HashMapClassInstanceVarTableImpl  objectvartable =
@@ -78,7 +72,7 @@ public class SmallJavaClassSupportEnv_NewInstance {
 		
 		//MEMO: 在class instance vo 创建的时候，需要初始化他对应的变量表
 		//MEMO：这一过程类似于在类定义读入时初始化类对应的静态变量表
-		ArrayList<SmallJavaClassVarDefineElement> vardefinelist = instanceVO.getPropertiesArray();
+		ArrayList<SmallJavaClassVarDefineElement> vardefinelist = instanceVO.getClasstemplatevo().getPropertiesArray();
 		for(SmallJavaClassVarDefineElement vardefine: vardefinelist) {
 			String strcontent = vardefine.getStringcontent();
 			//logger output for debug.

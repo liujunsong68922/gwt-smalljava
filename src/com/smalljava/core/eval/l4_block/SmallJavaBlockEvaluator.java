@@ -10,11 +10,13 @@ import com.smalljava.core.commonvo.l4_block.childblock.DOWHILEBlock;
 import com.smalljava.core.commonvo.l4_block.childblock.FORBlock;
 import com.smalljava.core.commonvo.l4_block.childblock.IFBlock;
 import com.smalljava.core.commonvo.l4_block.childblock.MethodBlock;
+import com.smalljava.core.commonvo.l4_block.childblock.ReturnBlock;
 import com.smalljava.core.commonvo.l4_block.childblock.WHILEBlock;
 import com.smalljava.core.commonvo.l5_expression.RootAST;
 import com.smalljava.core.eval.l4_block.worker_plugin.SmallJavaDOWHILEBlockEvaluator;
 import com.smalljava.core.eval.l4_block.worker_plugin.SmallJavaFORBlockEvaluator;
 import com.smalljava.core.eval.l4_block.worker_plugin.SmallJavaIFBlockEvaluator;
+import com.smalljava.core.eval.l4_block.worker_plugin.SmallJavaRETURNBlockEvalutor;
 import com.smalljava.core.eval.l4_block.worker_plugin.SmallJavaWHILEBlockEvaluator;
 import com.smalljava.core.eval.l5_expression.SmallJavaExpressionEval;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
@@ -62,8 +64,6 @@ public class SmallJavaBlockEvaluator {
 				logger.info("expression analyse true :"+child2.getBlockContent());
 			}
 			node.show(0);
-			//ClassTable classtable = new ClassTable();
-			//boolean b3 = node.eval(child2,classtable);
 			
 			
 			SmallJavaExpressionEval expressioneval = new SmallJavaExpressionEval();
@@ -81,8 +81,29 @@ public class SmallJavaBlockEvaluator {
 
 		for (BasicBlock child : child2.getChildren()) {
 			if(child instanceof MethodBlock) {
+				//MethodBlock暂不支持，不处理
 				continue;
 			}
+			
+			if(child instanceof ReturnBlock) {
+				ReturnBlock block1 = (ReturnBlock) child;
+				SmallJavaRETURNBlockEvalutor eval = new SmallJavaRETURNBlockEvalutor();
+				L4_HashMapBlockVarTableImpl vartable1 = new L4_HashMapBlockVarTableImpl("",vartable);
+				boolean b1 = eval.execute(block1, vartable1, classenv, oopenv);
+				if(! b1) {
+					//执行失败
+					logger.error("[ERROR] error when call return statement.");
+					return false;
+				}else {
+					VarValue retvalue = vartable1.getVarValue("return");
+					//将返回值写入vartable中
+					vartable.defineVar("return", retvalue.getVartype());
+					vartable.setVarValue("return", retvalue);
+					//中断程序执行，返回
+					return true;
+				}
+			}
+			
 			
 			if (child instanceof DOWHILEBlock) {
 				SmallJavaDOWHILEBlockEvaluator doblockeval = new SmallJavaDOWHILEBlockEvaluator();

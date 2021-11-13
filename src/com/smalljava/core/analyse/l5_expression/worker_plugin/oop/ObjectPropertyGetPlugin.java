@@ -5,10 +5,10 @@ import com.smalljava.core.analyse.l5_expression.worker_plugin.DefaultIPluginImpl
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.commonvo.l5_expression.AbstractAST;
-import com.smalljava.core.commonvo.l5_expression.oop.ObjectPropertyElement;
+import com.smalljava.core.commonvo.l5_expression.oop.ObjectPropertyGetElement;
 
-public class ObjectPropertyPlugin extends DefaultIPluginImplement {
-	private Logger logger = LoggerFactory.getLogger(ObjectPropertyPlugin.class);
+public class ObjectPropertyGetPlugin extends DefaultIPluginImplement {
+	private Logger logger = LoggerFactory.getLogger(ObjectPropertyGetPlugin.class);
 
 	@Override
 	public AbstractAST analyse(String strcode) {
@@ -29,7 +29,7 @@ public class ObjectPropertyPlugin extends DefaultIPluginImplement {
 					logger.debug("[debug] not find . operator");
 					return null;
 				} else {
-					ObjectPropertyElement objectproperty = new ObjectPropertyElement();
+					ObjectPropertyGetElement objectproperty = new ObjectPropertyGetElement();
 					objectproperty.setStrexpression(strcode);
 					String objname = strcode.substring(0, ipos);
 					logger.info("objname:" + objname);

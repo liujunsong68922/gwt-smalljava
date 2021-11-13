@@ -1,13 +1,9 @@
 package com.smalljava.core.commonvo.instancevo;
 
-import java.util.ArrayList;
-//import java.util.HashMap;
 
-import com.smalljava.core.common.logging.Logger;
-import com.smalljava.core.common.logging.LoggerFactory;
-import com.smalljava.core.commonvo.l2_javaclass.AbstractSmallJavaClassElement;
-import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassMethodElement;
-import com.smalljava.core.commonvo.l2_javaclass.element.SmallJavaClassVarDefineElement;
+//import com.smalljava.core.common.logging.Logger;
+//import com.smalljava.core.common.logging.LoggerFactory;
+import com.smalljava.core.commonvo.l2_javaclass.SmallJavaClassTemplateVO;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
 /**
@@ -16,21 +12,8 @@ import com.smalljava.core.l9_space.vartable.IVarTable;
  *
  */
 public class JavaClassInstanceVO {
-	private Logger logger = LoggerFactory.getLogger(JavaClassInstanceVO.class);
-	/**
-	 * Java packagename
-	 */
-	private String packagename;
-
-	/**
-	 * Java classname
-	 */
-	private String classname;
-
-	/**
-	 * children
-	 */
-	private ArrayList<AbstractSmallJavaClassElement> children = new ArrayList<AbstractSmallJavaClassElement>();
+	//logger
+//	private Logger logger = LoggerFactory.getLogger(JavaClassInstanceVO.class);
 
 	/**
 	 * each object instance has its own vartable,
@@ -39,80 +22,8 @@ public class JavaClassInstanceVO {
 	 */
 	private IVarTable vartable;
 	
-	public String getPackagename() {
-		return packagename;
-	}
-
-	public void setPackagename(String packagename) {
-		this.packagename = packagename;
-	}
-
-	public String getClassname() {
-		return classname;
-	}
-
-	public void setClassname(String classname) {
-		this.classname = classname;
-	}
-
-	public ArrayList<AbstractSmallJavaClassElement> getChildren() {
-		return children;
-	}
-
-	public void setChildren(ArrayList<AbstractSmallJavaClassElement> children) {
-		this.children = children;
-	}
-
-	public ArrayList<SmallJavaClassMethodElement> getMethodArray() {
-		ArrayList<SmallJavaClassMethodElement> retlist = new ArrayList<SmallJavaClassMethodElement>();
-		for (AbstractSmallJavaClassElement child : children) {
-			if (child instanceof SmallJavaClassMethodElement) {
-				SmallJavaClassMethodElement method = (SmallJavaClassMethodElement) child;
-				retlist.add(method);
-			}
-		}
-		return retlist;
-	}
-
-	public ArrayList<SmallJavaClassVarDefineElement> getPropertiesArray() {
-		ArrayList<SmallJavaClassVarDefineElement> retlist = new ArrayList<SmallJavaClassVarDefineElement>();
-		for (AbstractSmallJavaClassElement child : children) {
-			if (child instanceof SmallJavaClassVarDefineElement) {
-				SmallJavaClassVarDefineElement vardefine = (SmallJavaClassVarDefineElement) child;
-				retlist.add(vardefine);
-			}
-		}
-		return retlist;
-	}
-
-	public void show() {
-		for (AbstractSmallJavaClassElement child : children) {
-			logger.info(child.getClass().getSimpleName() + ":" + child.getStringcontent());
-		}
-	}
-
-	public SmallJavaClassMethodElement getMethod(String methodname) {
-		for (AbstractSmallJavaClassElement child : children) {
-			if (child instanceof SmallJavaClassMethodElement) {
-				SmallJavaClassMethodElement method = (SmallJavaClassMethodElement) child;
-				int ipos = method.getStringcontent().indexOf('(');
-				if (ipos < 0) {
-					continue;
-				} else {
-					String strleft = method.getStringcontent().substring(0, ipos + 1);
-					if (strleft.indexOf(" " + methodname + " ") > 0) {
-						return method;
-					}
-					if (strleft.indexOf(" " + methodname + "(") > 0) {
-						return method;
-					}
-				}
-
-			}
-		}
-
-		return null;
-	}
+	//This is the class template vo define.
+	private SmallJavaClassTemplateVO classtemplatevo;
 
 	public IVarTable getVartable() {
 		return vartable;
@@ -120,6 +31,21 @@ public class JavaClassInstanceVO {
 
 	public void setVartable(IVarTable vartable) {
 		this.vartable = vartable;
+	}
+
+	
+	public SmallJavaClassTemplateVO getClasstemplatevo() {
+		return classtemplatevo;
+	}
+
+	public void setClasstemplatevo(SmallJavaClassTemplateVO classtemplatevo) {
+		this.classtemplatevo = classtemplatevo;
+	}
+
+	public void show() {
+//		for (AbstractSmallJavaClassElement child : children) {
+//			logger.info(child.getClass().getSimpleName() + ":" + child.getStringcontent());
+//		}
 	}
 
 }

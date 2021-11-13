@@ -1,6 +1,5 @@
 package com.smalljava.core.eval.l5_expression.worker_plugin.oop;
 
-import java.util.ArrayList;
 
 import com.smalljava.core.common.UUIDFunction;
 import com.smalljava.core.common.UuidObjectManager;
@@ -9,20 +8,17 @@ import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.commonvo.l5_expression.RootAST;
 import com.smalljava.core.commonvo.l5_expression.oop.ObjectCallOperElement;
-import com.smalljava.core.eval.l5_expression.SmallJavaExpressionEval;
 import com.smalljava.core.eval.l5_expression.ISmallJavaExpressionEval;
+import com.smalljava.core.l6_supportenv.IClassObject;
 import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
 import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
-import com.smalljava.core.l6_supportenv.l6_oopsupport.objectcall.ObjectCallPluginManager;
-//import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
-public class ObjectCallEvalPlugin implements ISmallJavaExpressionEval {
+public class ObjectPropertyGetPlugin implements ISmallJavaExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(ObjectCallEvalPlugin.class);
 
 	@Override
-	public VarValue eval(RootAST root, IVarTable vartable,
-			SmallJavaClassSupportEnv classenv,
+	public VarValue eval(RootAST root, IVarTable vartable, SmallJavaClassSupportEnv classenv,
 			SmallJavaOopSupportEnv oopenv) {
 		if (root == null) {
 			logger.error("root is null");
@@ -56,31 +52,18 @@ public class ObjectCallEvalPlugin implements ISmallJavaExpressionEval {
 				return null;
 			}
 
-			// ���ӽڵ㾭������ת����callarg
-			ArrayList<VarValue> arglist = new ArrayList<VarValue>();
-			for (RootAST child : root.getChildren()) {
-				SmallJavaExpressionEval eval = new SmallJavaExpressionEval();
-				VarValue vvalue1 = eval.eval(child, vartable, classenv,oopenv);
-				logger.info("child return:" + vvalue1.toJSONString());
-
-				// ������ֵд��callarg
-				arglist.add(vvalue1);
-			}
-			return this.objectcall(classname,targetobj, methodname, arglist,oopenv);
+			return this.objectPropertyGet(classname,targetobj, methodname, oopenv);
 
 		}
 	}
+	
+	public VarValue objectPropertyGet(String classname,Object targetobj, String propertyname,SmallJavaOopSupportEnv oopenv) {
 
-	public VarValue objectcall(String classname,Object targobj, String methodname, ArrayList<VarValue> arglist,
-			SmallJavaOopSupportEnv oopenv) {
-
-		// step1. get Method
-		int argnum = arglist.size();
-		System.out.println("argnum:"+argnum);
 		Object retobj;
 		try {
-			ObjectCallPluginManager manager = oopenv.getObjectcallManager();
-			retobj = manager.objcall(classname, targobj, methodname, arglist);
+			// ObjectPropertyGetPluginManager manager = oopenv.getObjectpropertyManager();
+			IClassObject class1 = oopenv.getIClassByName(classname);
+			retobj = class1.objPropertyGet(classname, targetobj, propertyname, null, oopenv);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -133,4 +116,5 @@ public class ObjectCallEvalPlugin implements ISmallJavaExpressionEval {
 
 		return null;
 	}
+
 }

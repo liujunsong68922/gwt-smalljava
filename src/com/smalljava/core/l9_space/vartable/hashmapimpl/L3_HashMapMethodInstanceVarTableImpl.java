@@ -7,4 +7,7 @@ public class L3_HashMapMethodInstanceVarTableImpl extends AbstractHashMapVarTabl
 		super(stype, parentnode);
 	}
 	
+	public L3_HashMapMethodInstanceVarTableImpl(String stype, L2_HashMapClassStaticVarTableImpl parentnode) {
+		super(stype, parentnode);
+	}	
 }

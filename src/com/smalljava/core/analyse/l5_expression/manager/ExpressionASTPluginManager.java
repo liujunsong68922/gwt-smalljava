@@ -9,7 +9,7 @@ import com.smalljava.core.analyse.l5_expression.worker_plugin.one.LogicNotOperPl
 import com.smalljava.core.analyse.l5_expression.worker_plugin.oop.ImportOperPlugin;
 import com.smalljava.core.analyse.l5_expression.worker_plugin.oop.NewObjectOperPlugin;
 import com.smalljava.core.analyse.l5_expression.worker_plugin.oop.ObjectCallOperPlugin;
-import com.smalljava.core.analyse.l5_expression.worker_plugin.oop.ObjectPropertyPlugin;
+import com.smalljava.core.analyse.l5_expression.worker_plugin.oop.ObjectPropertyGetPlugin;
 import com.smalljava.core.analyse.l5_expression.worker_plugin.two.LogicCompareOperPlugin;
 import com.smalljava.core.analyse.l5_expression.worker_plugin.two.LogicComputeOperPlugin;
 import com.smalljava.core.analyse.l5_expression.worker_plugin.two.MathAddDeaddOperPlugin;
@@ -42,7 +42,7 @@ public class ExpressionASTPluginManager {
 			pluginmap.add(new VarSetOperPlugin());
 			pluginmap.add(new NewObjectOperPlugin());
 			pluginmap.add(new ImportOperPlugin());
-			pluginmap.add(new ObjectPropertyPlugin());
+			pluginmap.add(new ObjectPropertyGetPlugin());
 		}
 	}
 

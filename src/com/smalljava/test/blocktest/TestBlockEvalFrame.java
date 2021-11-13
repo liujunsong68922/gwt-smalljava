@@ -28,7 +28,7 @@ import com.smalljava.swing.BasicBlockToTreeNode;
 //import com.smalljava.test.expresstest.TestMainFrame;
 
 public class TestBlockEvalFrame {
-	private static TestMainFrame mainframe = new TestMainFrame();
+	private TestMainFrame mainframe = new TestMainFrame();
 
 	public TestBlockEvalFrame() {
 
@@ -45,6 +45,11 @@ public class TestBlockEvalFrame {
 }
 
 class TestMainFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Label label1 = new Label("smalljava block test frame.");
 
 	TestFrameButtonPanel buttonpanel = new TestFrameButtonPanel();
@@ -247,6 +252,10 @@ class TestMainFrame extends JFrame {
 }
 
 class TestFrameButtonPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JButton b1 = new JButton("text1");
 	JButton b2 = new JButton("text2");
 	JButton b3 = new JButton("text3");

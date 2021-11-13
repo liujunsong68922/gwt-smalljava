@@ -13,14 +13,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.smalljava.core.analyse.l4_block.BlockAnalyse;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.commonvo.l4_block.BasicBlock;
-import com.smalljava.core.eval.l4_block.SmallJavaBlockEvaluator;
-import com.smalljava.core.l6_supportenv.l6_classsupport.SmallJavaClassSupportEnv;
-import com.smalljava.core.l6_supportenv.l6_oopsupport.SmallJavaOopSupportEnv;
-//import com.smalljava.core.l9_space.classtable.impl.ClassTableImpl;
-import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
-import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
-import com.smalljava.core.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
-import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableImpl;
 import com.smalljava.workflow.core.analyse.WorkflowAnalyse;
 import com.smalljava.workflow.core.engine.WorkflowEngine;
 import com.smalljava.workflow.core.vo.WorkflowDefineVO;
@@ -54,8 +46,8 @@ class SmallJavaWorkflowTestPanel_VerticalPanel extends VerticalPanel{
 			+"<End></End>\r\n"
 			+"</Workflow>";
 	private final String stext2 = "";
-	private final String stext3 = "";
-	private final String stext4 = "";
+	//private final String stext3 = "";
+	//private final String stext4 = "";
 	
 	final HorizontalPanel buttonpanel = new HorizontalPanel();
 	final TextArea textarea = new TextArea();

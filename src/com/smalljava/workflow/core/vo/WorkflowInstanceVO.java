@@ -1,7 +1,5 @@
 package com.smalljava.workflow.core.vo;
 
-import java.util.ArrayList;
-
 public class WorkflowInstanceVO {
 
 	private WorkflowDefineVO definevo;

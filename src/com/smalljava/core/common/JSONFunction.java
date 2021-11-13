@@ -10,7 +10,7 @@ public class JSONFunction {
 	 * @param map
 	 * @return
 	 */
-	public static String hashmapToJsonString(HashMap<String, VarValue> map) {
+	public String hashmapToJsonString(HashMap<String, VarValue> map) {
 		String sret = "";
 		Iterator iter = map.keySet().iterator();
 		while (iter.hasNext()) {

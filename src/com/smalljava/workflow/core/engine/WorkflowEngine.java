@@ -173,7 +173,7 @@ public class WorkflowEngine {
 		}
 		
 		//按照优先级来进行计算
-		Transmition successTran = null;
+		//Transmition successTran = null;
 		TransmitionEval eval = new TransmitionEval();
 		for(Transmition tt : list2) {
 			//判断这个转换是否可用

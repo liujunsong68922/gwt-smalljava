@@ -31,7 +31,7 @@ import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableI
 import com.smalljava.swing.RootASTToTreeNode;
 
 public class TestExpressEvalFrame {
-	private static TestMainFrame mainframe = new TestMainFrame();
+	private TestMainFrame mainframe = new TestMainFrame();
 
 	public TestExpressEvalFrame() {
 
@@ -48,6 +48,11 @@ public class TestExpressEvalFrame {
 }
 
 class TestMainFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Label label1 = new Label("smalljava testframe.");
 
 	TestFrameButtonPanel buttonpanel = new TestFrameButtonPanel();
@@ -239,6 +244,10 @@ class TestMainFrame extends JFrame {
 }
 
 class TestFrameButtonPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JButton b1 = new JButton("text1");
 	JButton b2 = new JButton("text2");
 	JButton b3 = new JButton("text3");
